@@ -19,7 +19,10 @@ import { Roles } from "../decorators/roles.decorator";
         
         try 
         { 
-            const payload= await this.jwtService.verifyAsync(token,{secret:process.env.JWT_SECRET,});             
+            const payload= await this.jwtService.verifyAsync(token,{secret:process.env.JWT_SECRET,});  
+            //
+            if(payload._id){request.user=payload; return true;}
+            //           
             if(roles.includes(payload.role)){return true;} 
             else{throw new UnauthorizedException();} 
         } 

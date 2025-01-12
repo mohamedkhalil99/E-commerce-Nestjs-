@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -12,7 +12,7 @@ const saltRounds = 10;
 export class UserService 
 {
   constructor(@InjectModel(User.name)private userModel:Model<User>){}
-
+  
   async create(createUserDto: CreateUserDto):Promise<{status: number, message: string, data: User}>
   {
     //if email exists to avoid duplication
@@ -24,7 +24,7 @@ export class UserService
     const user={password,role:createUserDto.role??'user',active:true};
     return{status:201,message:'User created successfully',data:await this.userModel.create({...createUserDto,...user})};
   }
-
+  
   async findAll(query):Promise<{status: number, length: number, data: User[]}>
   {
     const {limit=1000_000_000,skip=0,sort='asc',name,email,role} = query;
@@ -58,5 +58,24 @@ export class UserService
     const user = await this.userModel.findByIdAndDelete(id);
     if(!user){throw new NotFoundException();}
     return {status:200,message:'User deleted successfully'};
+  }
+
+  //For User
+  async getProfile(payload):Promise<{status: number, data: User}>
+  {
+    if(!payload._id){throw new NotFoundException('User not found');}
+    const user = await this.userModel.findById(payload._id).select('-password -__v');
+    if(!user){throw new NotFoundException('User not found');}
+    return {status:200,data:user};
+  }
+
+  async unActiveProfile(payload):Promise<{status: number, message: string}>
+  {
+    if(!payload._id){throw new NotFoundException('User not found');}
+    const user = await this.userModel.findById(payload._id).select('-password -__v');
+    if(!user){throw new NotFoundException('User not found');}
+    if(!user.active){throw new ConflictException('User already unactivated');}
+    await this.userModel.findByIdAndUpdate(payload._id,{active:false},{new:true}).select('-password -__v')
+    return {status:200,message:'User Unactivated successfully'};
   }
 }
