@@ -21,10 +21,10 @@ export class User
   @Prop({Optional: true, type: String})
   avatar: string;
 
-  @Prop({required: true, type: Number})
+  @Prop({Optional: true, type: Number})
   age: number;
 
-  @Prop({required: true, type: String,phoneLocale:'EG',phonenumber:true,length:11})
+  @Prop({Optional: true, type: String,phoneLocale:'EG',phonenumber:true,length:11})
   phoneNumber:string;
 
   @Prop({Optional: true, type: String})
