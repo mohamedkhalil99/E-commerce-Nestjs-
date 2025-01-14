@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from 'src/user/guards/auth.guard';
-import { SignUpDto, SignInDto } from './dto/signup.dto';
+import { SignUpDto, SignInDto, VerifyResetPasswordCodeDto, ForgotPasswordDto, NewPasswordDto } from './dto/signup.dto';
 
 @Controller('auth')
 @UseGuards(AuthGuard)//Use the AuthGuard to protect the routes
@@ -25,5 +25,33 @@ export class AuthController
   signIn(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) signInDto: SignInDto) 
   {
     return this.authService.signIn(signInDto);
+  }
+
+  //Reset password//
+  //Desc: User can reset password
+  //Route: POST api/v1/auth/forgot-password
+  //Access: Public
+  @Post('forgot-password')
+  forgotPassword(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) email: ForgotPasswordDto)
+  {
+    return this.authService.forgotPassword(email);
+  }
+
+  //Desc: User can verify the reset password code
+  //Route: POST api/v1/auth/verify-reset-password-code
+  //Access: Public
+  @Post('verify-reset-password-code')
+  verifyResetPasswordCode(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) dto:VerifyResetPasswordCodeDto)
+  {
+    return this.authService.verifyResetPasswordCode(dto);
+  }
+
+  //Desc: User can Put a new password
+  //Route: PUT api/v1/auth/reset-password
+  //Access: Private (Admin, User)
+  @Post('reset-password')//email:SignUpDto
+  newPassword(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true}))dto:NewPasswordDto )
+  {
+    return this.authService.newPassword(dto);
   }
 }
