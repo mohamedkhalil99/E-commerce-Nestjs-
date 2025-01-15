@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
   JwtModule.register({
     global: true,
     secret: process.env.JWTKey,
-    signOptions: { expiresIn: '60s' },}),
+    signOptions: { expiresIn: '300s' },}),
   AuthModule,
   MailerModule.forRoot({
     transport: {
@@ -24,6 +25,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
         pass: process.env.EMAIL_PASSWORD,
       },},
   }),
+  CategoryModule,
 ],
   controllers: [],
   providers: [],

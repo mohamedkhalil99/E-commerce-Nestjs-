@@ -1,0 +1,55 @@
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Category } from './category.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
+@Injectable()
+export class CategoryService 
+{
+  constructor(@InjectModel(Category.name)private categoryModel:Model<Category>){}
+  
+  async create(createCategoryDto: CreateCategoryDto) : Promise<{status: number, message: string, data: Category}>
+  {
+    //Search for category
+    const category = await this.categoryModel.findOne({name:createCategoryDto.name});
+    if(category){throw new ConflictException('Category already exists');}
+    //Create category
+    const newCategory = await this.categoryModel.create(createCategoryDto);
+    return {status:201,message:'Category created successfully',data:newCategory};
+  }
+
+  async findAll() : Promise<{status: number, length: number, data: Category[]}>
+  {
+    const categories = await this.categoryModel.find().select('-__v');
+    return{status:200,length:categories.length,data:categories};
+  }
+
+  async findOne(id: string) : Promise<{status: number, data: Category}>
+  {
+    const category = await this.categoryModel.findById(id).select('-__v');
+    if(!category){throw new NotFoundException('Category not found');}
+    return {status:200,data:category};
+  }
+
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) : Promise<{status: number, message: string, data: Category}>
+  {
+    //Search for category
+    const category = await this.categoryModel.findById(id);
+    if(!category){throw new NotFoundException('Category not found');}
+    //Update category
+    const updatedCategory = await this.categoryModel.findByIdAndUpdate(id,updateCategoryDto,{new:true}).select('-__v');
+    return {status:200,message:'Category updated successfully',data:updatedCategory};
+  }
+
+  async remove(id: string) : Promise<{status: number, message: string}>
+  {
+    //Search for category
+    const category = await this.categoryModel.findById(id);
+    if(!category){throw new NotFoundException('Category not found');}
+    //Delete category
+    await this.categoryModel.findByIdAndDelete(id);
+    return {status:200,message:'Category deleted successfully'};  
+  }
+}

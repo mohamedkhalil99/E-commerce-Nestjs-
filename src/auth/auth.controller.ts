@@ -1,10 +1,8 @@
-import { Body, Controller, Post, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from 'src/user/guards/auth.guard';
 import { SignUpDto, SignInDto, VerifyResetPasswordCodeDto, ForgotPasswordDto, NewPasswordDto } from './dto/signup.dto';
 
 @Controller('auth')
-@UseGuards(AuthGuard)//Use the AuthGuard to protect the routes
 export class AuthController 
 {
   constructor(private readonly authService: AuthService) {}
