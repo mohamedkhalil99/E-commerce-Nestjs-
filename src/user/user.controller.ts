@@ -86,7 +86,7 @@ export class UserProfileController
   @Patch()
   updateProfile(@Req() req, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateUserDto: UpdateUserDto)
   {
-    return this.userService.update(req.user._id, updateUserDto);
+    return this.userService.update(req.user.id, updateUserDto);
   }
 
   //Desc: User can UnActive his/her profile

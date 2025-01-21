@@ -63,19 +63,19 @@ export class UserService
   //For User
   async getProfile(payload):Promise<{status: number, data: User}>
   {
-    if(!payload._id){throw new NotFoundException('User not found');}
-    const user = await this.userModel.findById(payload._id).select('-password -__v');
+    if(!payload.id){throw new NotFoundException('User not found');}
+    const user = await this.userModel.findById(payload.id).select('-password -__v');
     if(!user){throw new NotFoundException('User not found');}
     return {status:200,data:user};
   }
 
   async unActiveProfile(payload):Promise<{status: number, message: string}>
   {
-    if(!payload._id){throw new NotFoundException('User not found');}
-    const user = await this.userModel.findById(payload._id).select('-password -__v');
+    if(!payload.id){throw new NotFoundException('User not found');}
+    const user = await this.userModel.findById(payload.id).select('-password -__v');
     if(!user){throw new NotFoundException('User not found');}
     if(!user.active){throw new ConflictException('User already unactivated');}
-    await this.userModel.findByIdAndUpdate(payload._id,{active:false},{new:true}).select('-password -__v')
+    await this.userModel.findByIdAndUpdate(payload.id,{active:false},{new:true}).select('-password -__v')
     return {status:200,message:'User Unactivated successfully'};
   }
 }

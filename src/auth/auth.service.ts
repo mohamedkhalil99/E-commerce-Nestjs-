@@ -45,7 +45,7 @@ export class AuthService
         if(!isMatch){throw new ConflictException('Wrong Email Or Password');}
 
         //create token by payload
-        const payload={email:ifEmailExists.email,role:ifEmailExists.role,};
+        const payload={email:ifEmailExists.email,role:ifEmailExists.role,id:ifEmailExists._id};
         const token= await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET,});
         return {data:ifEmailExists,token};
     }

@@ -10,6 +10,7 @@ import { SubCategoryModule } from './sub-category/subCategory.module';
 import { BrandModule } from './brand/brand.module';
 import { CouponModule } from './coupon/coupon.module';
 import { SupplierModule } from './supplier/supplier.module';
+import { ProductRequestModule } from './product-request/product-request.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { SupplierModule } from './supplier/supplier.module';
   JwtModule.register({
     global: true,
     secret: process.env.JWTKey,
-    signOptions: { expiresIn: '300s' },}),
+    signOptions: { expiresIn: '300s' },
+  }),
   AuthModule,
   MailerModule.forRoot({
     transport: {
@@ -34,6 +36,7 @@ import { SupplierModule } from './supplier/supplier.module';
   BrandModule,
   CouponModule,
   SupplierModule,
+  ProductRequestModule,
 ],
   controllers: [],
   providers: [],
