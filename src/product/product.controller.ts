@@ -22,7 +22,7 @@ export class ProductController
   }
 
   //Desc: Anyone can Get All Products
-  //Route: POST api/v1/product
+  //Route: GET api/v1/product
   //Access: Public
   @Get()
   findAll(@Query() query: any) 
@@ -31,7 +31,7 @@ export class ProductController
   }
 
   //Desc: Anyone can Get a Product
-  //Route: POST api/v1/product
+  //Route: GET api/v1/product/:id
   //Access: Public
   @Get(':id')
   findOne(@Param('id') id: string) 
@@ -40,7 +40,7 @@ export class ProductController
   }
 
   //Desc: Admin can Update a Product
-  //Route: POST api/v1/product
+  //Route: PATCH api/v1/product/:id
   //Access: Private (admin)
   @Roles(['admin'])
   @Patch(':id')
@@ -50,7 +50,7 @@ export class ProductController
   }
 
   //Desc: Admin or User can Delete a Product
-  //Route: POST api/v1/product
+  //Route: DELETE api/v1/product/:id
   //Access: Private (admin)
   @Roles(['admin'])
   @Delete(':id')

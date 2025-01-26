@@ -65,8 +65,9 @@ export class ProductService
 
   async findOne(id: string) :Promise<{status:number,data:Product}>
   {
-    const product = await (await this.productModel.findById(id).select('-__v')).populate('category subCategory brand');
+    let product = await (await this.productModel.findById(id).select('-__v'));
     if(!product){throw new NotFoundException('Product not found');}
+    product= await product.populate('category subCategory brand')
     return {status:200,data:product};
   }
 

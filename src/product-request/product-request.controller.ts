@@ -32,7 +32,7 @@ export class ProductRequestController
   }
 
   //Desc: Admin can Get One Product Request | User can Get Only his Product Request
-  //Route: GET api/v1/product-request
+  //Route: GET api/v1/product-request/:id
   //Access: Private (admin and user)
   @Roles(['admin','user'])
   @Get(':id')
@@ -42,17 +42,17 @@ export class ProductRequestController
   }
 
   //Desc: User can Update Only his Product Request
-  //Route: PATCH api/v1/product-request
+  //Route: PATCH api/v1/product-request/:id
   //Access: Private (user)
   @Roles(['user'])
   @Patch(':id')
   update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateProductRequestDto: UpdateProductRequestDto,@Req() req) 
   {
-    return this.productRequestService.update(id,/* {...*/updateProductRequestDto/*, user:req.user.id}*/, req);
+    return this.productRequestService.update(id,updateProductRequestDto, req);
   }
 
   //Desc: User can Delete Only his Product Request
-  //Route: Delete api/v1/product-request
+  //Route: Delete api/v1/product-request/:id
   //Access: Private (user)
   @Roles(['user'])
   @Delete(':id')
