@@ -13,11 +13,11 @@ export class CreateProductDto
     @MinLength(3,{message:'Description is too short'})
     description: string;
 
-    @IsNotEmpty({message:'Quantity is required'})
-    @IsNumber({},{message:'Quantity must be a number'})
-    @Min(3,{message:'Quantity must be at least 3'})
-    @Max(500,{message:'Quantity must be at most 500'})
-    quantity: number;
+    @IsNotEmpty({message:'Stock is required'})
+    @IsNumber({},{message:'Stock must be a number'})
+    @Min(3,{message:'Stock must be at least 3'})
+    @Max(500,{message:'Stock must be at most 500'})
+    stock: number;
 
     @IsNotEmpty({message:'Cover Image is required'})
     @IsUrl({},{message:'Cover Image must be a valid URL'})

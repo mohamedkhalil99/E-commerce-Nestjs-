@@ -42,6 +42,9 @@ export class CouponService
     //Search for coupon
     const coupon = await this.couponModel.findById(id).select('-__v');
     if(!coupon){throw new NotFoundException('Coupon not found');}
+    //If Date Is Expired
+    const isExpired = new Date(updateCouponDto.expireDate) > new Date();
+    if(!isExpired){throw new ConflictException('Coupon expire date must be a future date');}
     //Update coupon
     const updatedCoupon = await this.couponModel.findByIdAndUpdate(id,updateCouponDto,{new:true}).select('-__v');
     return {status:200,message:'Coupon updated successfully',data:updatedCoupon};

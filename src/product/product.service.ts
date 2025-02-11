@@ -30,6 +30,10 @@ export class ProductService
     //Check if Brand exists
     const brand = await this.brandModel.findById(createProductDto.brand);
     if(!brand){throw new NotFoundException('Brand not found');} 
+    //check if priceAfterDiscount is less than price
+    const price= product.price || createProductDto?.price;
+    const priceAfterDiscount= product.priceAfterDiscount || createProductDto?.priceAfterDiscount || 0;
+    if(priceAfterDiscount>price){throw new ConflictException('Price After Discount cannot be greater than Price');} 
     //Create New Product
     const newProduct = await (await this.productModel.create(createProductDto)).populate('category subCategory brand','-__v');
     return {status:201,message:'Product created successfully',data:newProduct};
@@ -85,8 +89,12 @@ export class ProductService
     //Check if Brand exists
     const brand = await this.brandModel.findById(updateProductDto.brand);
     if(!brand){throw new NotFoundException('Brand not found');} 
-    //check if quantity is only decreased
-    if(product.quantity<updateProductDto.quantity){throw new ConflictException('Quantity cannot be increased');}
+    //check if stock is only decreased
+    if(product.stock<updateProductDto.stock){throw new ConflictException('Stock cannot be increased');}
+    //check if priceAfterDiscount is less than price
+    const price= product.price || updateProductDto?.price;
+    const priceAfterDiscount= product.priceAfterDiscount || updateProductDto?.priceAfterDiscount || 0;
+    if(priceAfterDiscount>price){throw new ConflictException('Price After Discount cannot be greater than Price');} 
     //Update Product
     const updatedProduct = await (await this.productModel.findByIdAndUpdate(id,updateProductDto,{new:true}).select('-__v')).populate('category subCategory brand');
     return {status:200,message:'Product updated successfully',data:updatedProduct};

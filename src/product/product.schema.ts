@@ -16,7 +16,7 @@ export class Product
   description: string;
 
   @Prop({required:true, type:Number,min:1,max:500,default:1})
-  quantity: number;
+  stock: number;
 
   @Prop({required:true, type:String})
   coverImage: string;
