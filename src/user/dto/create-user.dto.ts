@@ -1,4 +1,20 @@
-import { IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString, IsUrl, Length, MaxLength, Min, MinLength } from "class-validator";
+import { Type } from "class-transformer";
+import { IsArray, IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString, IsUrl, Length, MaxLength, Min, MinLength } from "class-validator";
+
+class AddressDto 
+{
+    @IsString()
+    name: string; 
+
+    @IsString({ message: 'Address must be a string' })
+    addressDetails: string;
+  
+    @IsString()
+    district: string;
+  
+    @IsString()
+    city: string;
+}
 
 export class CreateUserDto 
 {
@@ -11,7 +27,6 @@ export class CreateUserDto
     @IsNotEmpty({message: 'Email is required'})
     @IsString({message: 'Email must be a string'})
     @IsEmail({}, {message: 'Invalid email format'})
-    // @IsEmailUnique({message: 'Email already exists'})
     email: string;
 
     @IsNotEmpty({message: 'Password is required'})
@@ -40,9 +55,10 @@ export class CreateUserDto
     @Length(11, 11, {message: 'Phone number must be 11 characters'})
     phoneNumber: string;
 
-    @IsOptional()
-    @IsString({message: 'Address must be a string'})
-    address: string;
+    @IsNotEmpty({message:'Address is required'})
+    @IsArray()
+    @Type(()=>AddressDto)
+    address: AddressDto[];
 
     @IsOptional()
     @IsBoolean({message: 'Active must be a boolean'})

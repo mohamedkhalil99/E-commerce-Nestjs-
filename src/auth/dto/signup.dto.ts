@@ -1,4 +1,20 @@
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { Type } from "class-transformer";
+import { IsArray, IsEmail, IsNotEmpty, IsString, MaxLength, MinLength, ValidateNested } from "class-validator";
+
+class AddressDto 
+{
+    @IsString()
+    name: string;
+  
+    @IsString()
+    addressDetails: string;
+  
+    @IsString()
+    district: string;
+  
+    @IsString()
+    city: string;
+}
 
 export class SignUpDto 
 {
@@ -18,6 +34,16 @@ export class SignUpDto
     @MinLength(6, {message: 'Password must be at least 6 characters'})
     @MaxLength(20, {message: 'Password must be at most 20 characters'})
     password: string;
+
+    @IsNotEmpty({message: 'Phone Number is required'})
+    @IsString({message:'Phone Number must be a string'})
+    phoneNumber:string;
+
+    @IsNotEmpty({message: 'Address is required'})
+    @ValidateNested()
+    @IsArray()
+    @Type(() => AddressDto)
+    address:AddressDto[];
 }
 
 export class SignInDto 

@@ -9,4 +9,8 @@ export class CreateTaxDto
     @IsOptional()
     @IsNumber({},{message:'Shipping Fee Must be a Number'})
     shippingFees:number;
+
+    @IsOptional()
+    @IsNumber({},{message:'cashOnDeliveryFees Must be a Number'})
+    cashOnDelivery:number;
 }

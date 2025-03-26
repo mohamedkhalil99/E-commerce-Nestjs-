@@ -10,7 +10,7 @@ export class TaxController
 {
   constructor(private readonly taxService: TaxService) {}
 
-  //Desc: Admin can Create a new Tax
+  //Desc: Admin can Create a new Tax, shippingFees and cashOnDeliveryFees
   //Route: POST api/v1/tax
   //Access: Private (admin only)
   @Roles(['admin'])

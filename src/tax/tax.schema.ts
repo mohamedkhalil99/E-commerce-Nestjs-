@@ -11,6 +11,9 @@ export class Tax
 
   @Prop({ required: false,default:0,type: Number})
   shippingFees: number;
+
+  @Prop({ required: false,default:0,type: Number})
+  cashOnDelivery: number;
 }
 
 export const TaxSchema = SchemaFactory.createForClass(Tax);

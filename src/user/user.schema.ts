@@ -18,17 +18,17 @@ export class User
   @Prop({required: true, type: String, enum: ['admin', 'user'],/* default: 'user'*/})
   role: string;
 
-  @Prop({Optional: true, type: String})
+  @Prop({required: false, type: String})
   avatar: string;
 
-  @Prop({Optional: true, type: Number})
+  @Prop({required: false, type: Number})
   age: number;
 
-  @Prop({Optional: true, type: String,phoneLocale:'EG',phonenumber:true,length:11})
+  @Prop({required: true, type: String,phoneLocale:'EG',phonenumber:true,length:11})
   phoneNumber:string;
 
-  @Prop({Optional: true, type: String})
-  address: string;
+  @Prop({required: true, type:[{addressDetails:String,district:String,city:String}]})
+  address: {addressDetails:string,district:string,city:string}[];
 
   @Prop({type: Boolean, enum: [true, false]})
   active: boolean;
