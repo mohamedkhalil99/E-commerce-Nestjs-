@@ -31,8 +31,8 @@ export class ProductService
     const brand = await this.brandModel.findById(createProductDto.brand);
     if(!brand){throw new NotFoundException('Brand not found');} 
     //check if priceAfterDiscount is less than price
-    const price= product.price || createProductDto?.price;
-    const priceAfterDiscount= product.priceAfterDiscount || createProductDto?.priceAfterDiscount || 0;
+    const price= createProductDto.price;
+    const priceAfterDiscount= createProductDto?.priceAfterDiscount ?? 0;
     if(priceAfterDiscount>price){throw new ConflictException('Price After Discount cannot be greater than Price');} 
     //Create New Product
     const newProduct = await (await this.productModel.create(createProductDto)).populate('category subCategory brand','-__v');
