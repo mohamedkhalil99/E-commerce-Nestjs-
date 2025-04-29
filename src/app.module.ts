@@ -16,6 +16,7 @@ import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
 import { CartModule } from './cart/cart.module';
 import { OrderModule } from './order/order.module';
+import { CloudinaryModule } from './upload-images/cloudinary.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { OrderModule } from './order/order.module';
   ReviewModule,
   CartModule,
   OrderModule,
+  CloudinaryModule,
 ],
   controllers: [],
   providers: [],
