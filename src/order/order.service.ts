@@ -50,17 +50,18 @@ export class OrderService
       paymentMethod,
       shippingAddress:user.address,
     };
+
     if(paymentMethod==='cash')
     {
       data.orderTotalPrice+=(data.shippingFees+taxes.cashOnDelivery);
       const order = await this.orderModel.create({...data,isPaid:false,isDeliverd:false});
-      //Reset Cart
-      await this.cartModel.deleteOne({ user: userId });
       //update product sold and stock
       for (const item of cart.cartItems) 
       {
         await this.productModel.findByIdAndUpdate(item.productId,{$inc:{stock:-item.quantity,sold:+item.quantity}},{new:true}) 
       }
+      //Reset Cart
+      await this.cartModel.deleteOne({ user: userId });
       //Send the order confrmation to the email
       const { addressDetails, district, city } = order.shippingAddress[0];
 
@@ -84,7 +85,6 @@ export class OrderService
         </div>
       `;  
       
-
       await this.mailService.sendMail
       ({
           from: `E-Commerce-Nestjs <${process.env.EMAIL_USERNAME}>`,
@@ -93,9 +93,8 @@ export class OrderService
           html: htmlmsg,
       });
       return {status:201,message:'Order Created successfully',data:order}
-      
-              // return {status:201,message:`Verification code sent to your email ${email.email}`};
     }
+
     const session = await istripe.checkout.sessions.create
     ({
       payment_method_types: ['card'],
@@ -178,43 +177,42 @@ export class OrderService
       };
       data.orderTotalPrice+=data.shippingFees;
       const order = await this.orderModel.create({...data,isPaid:true,isDeliverd:false,paidAt:new Date(session.created*1000)});
-      //Reset Cart
-      await this.cartModel.deleteOne({user:user_id});
       //update product sold and stock
       await Promise.all(cart.cartItems.map(item => this.productModel.findByIdAndUpdate(item.productId, 
       { $inc: { stock: -item.quantity, sold: +item.quantity }}, { new: true })));
+      //Reset Cart
+      await this.cartModel.deleteOne({user:user_id});
       
-            //Send the order confrmation to the email
-            const { addressDetails, district, city } = order.shippingAddress[0];
+      //Send the order confrmation to the email
+      const { addressDetails, district, city } = order.shippingAddress[0];
       
-            const htmlmsg = `
-            <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-            <h1 style="color: #007bff; text-align: center;">Order Confirmation</h1>
-            <p>Dear <strong>${user.name}</strong>,</p>
-            <p>Thank you for your order! We have received your order and are currently processing it.</p>
+      const htmlmsg = `
+      <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+      <h1 style="color: #007bff; text-align: center;">Order Confirmation</h1>
+      <p>Dear <strong>${user.name}</strong>,</p>
+      <p>Thank you for your order! We have received your order and are currently processing it.</p>
                       
-            <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
-            <p><strong>Order Number:</strong> ${order._id}</p>
-            <p><strong>Shipping Address:</strong> ${addressDetails}, ${district}, ${city}</p>
-            <p><strong>Tax:</strong> EGP ${order.tax}</p>
-            <p><strong>Shipping Fees:</strong> EGP ${order.shippingFees}</p>
-            <p><strong>Cash On Delivery Fees:</strong> EGP ${order.cashOnDelivery}</p>
-            <p><strong>Total Price:</strong> EGP ${order.orderTotalPrice}</p>
-            </div>
+      <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
+      <p><strong>Order Number:</strong> ${order._id}</p>
+      <p><strong>Shipping Address:</strong> ${addressDetails}, ${district}, ${city}</p>
+      <p><strong>Tax:</strong> EGP ${order.tax}</p>
+      <p><strong>Shipping Fees:</strong> EGP ${order.shippingFees}</p>
+      <p><strong>Cash On Delivery Fees:</strong> EGP ${order.cashOnDelivery}</p>
+      <p><strong>Total Price:</strong> EGP ${order.orderTotalPrice}</p>
+      </div>
                   
-            <p style="text-align: center; margin-top: 20px;">We appreciate your trust in us and look forward to serving you again.</p>
-            <p style="text-align: center; font-size: 14px; color: #666;">If you have any questions, please contact our support team.</p>
-            </div>
-            `;  
+      <p style="text-align: center; margin-top: 20px;">We appreciate your trust in us and look forward to serving you again.</p>
+      <p style="text-align: center; font-size: 14px; color: #666;">If you have any questions, please contact our support team.</p>
+      </div>
+      `;  
                   
-            
-            await this.mailService.sendMail
-            ({
-            from: `E-Commerce-Nestjs <${process.env.EMAIL_USERNAME}>`,
-            to:user.email,
-            subject: 'E-Commerce-Nestjs | Order Confirmation',
-            html: htmlmsg,
-            });
+      await this.mailService.sendMail
+      ({
+      from: `E-Commerce-Nestjs <${process.env.EMAIL_USERNAME}>`,
+      to:user.email,
+      subject: 'E-Commerce-Nestjs | Order Confirmation',
+      html: htmlmsg,
+      });
       return {status:201,message:'Order Created successfully',data:order}
     }
     }
