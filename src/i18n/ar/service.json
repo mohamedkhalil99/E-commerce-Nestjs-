@@ -1,0 +1,14 @@
+{
+    "USER":"المستخدم",
+    "ALREADY_EXISTS":"{property} موجود بالفعل",
+    "CREATED_SUCCESSFULLY":"{property} تم الأنشاء بنجاح",
+    "INVALID_LIMIT_QUERY_PARAMETERS":"عدد النتائج المطلوب غير صحيح",
+    "INVALID_SKIP_QUERY_PARAMETERS":"عدد العناصر التي سيتم تجاهلها غير صحيح",
+    "INVALID_SORT_QUERY_PARAMETERS":"طريقة الترتيب غير صحيحة",
+    "NOT_FOUND":"{property} غير موجود",
+    "UPDATED_SUCCESSFULLY":"{property} تم تحديث",
+    "DELETED_SUCCESSFULLY":"{property} تم حذف",
+    "ALREADY_UNACTIVATED":"غير مفعل بالفعل {property}",
+    "UNACTIVATED_SUCCESSFULLY":"{property} تم تفعيل"
+
+}

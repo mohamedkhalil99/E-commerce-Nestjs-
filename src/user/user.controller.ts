@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseGuards, Query, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseGuards, Query, Req, UseFilters } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from './guards/auth.guard';
 import { Roles } from './decorators/roles.decorator';
+import { I18n, I18nContext, I18nValidationExceptionFilter } from 'nestjs-i18n';
 
 @Controller('user')
 @UseGuards(AuthGuard)//Use the AuthGuard to protect the routes
@@ -15,9 +16,10 @@ export class UserController {
   //Access: Private (admin only)
   @Roles(['admin'])
   @Post()
-  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createUserDto: CreateUserDto) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createUserDto: CreateUserDto, @I18n() i18n: I18nContext) 
   {
-    return this.userService.create(createUserDto);
+    return this.userService.create(createUserDto, i18n);
   }
 
   //Desc: Admin can Get all users
@@ -25,9 +27,9 @@ export class UserController {
   //Access: Private (admin only)
   @Roles(['admin'])
   @Get()
-  findAll(@Query() query: any)
+  findAll(@Query() query: any, @I18n() i18n: I18nContext)
   {
-    return this.userService.findAll(query);
+    return this.userService.findAll(query, i18n);
   }
 
   //Desc: Admin can Get a single user
@@ -35,9 +37,9 @@ export class UserController {
   //Access: Private (admin only)
   @Roles(['admin'])
   @Get(':id')
-  findOne(@Param('id') id: string) 
+  findOne(@Param('id') id: string, @I18n() i18n: I18nContext) 
   {
-    return this.userService.findOne(id);
+    return this.userService.findOne(id, i18n);
   }
 
   //Desc: Admin can Update a user
@@ -45,9 +47,9 @@ export class UserController {
   //Access: Private (admin only)
   @Roles(['admin'])
   @Patch(':id')
-  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateUserDto: UpdateUserDto) 
+  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateUserDto: UpdateUserDto, @I18n() i18n: I18nContext) 
   {
-    return this.userService.update(id, updateUserDto);
+    return this.userService.update(id, updateUserDto, i18n);
   }
 
   //Desc: Admin can Delete a user
@@ -55,9 +57,9 @@ export class UserController {
   //Access: Private (admin only)
   @Roles(['admin'])
   @Delete(':id')
-  remove(@Param('id') id: string) 
+  remove(@Param('id') id: string, @I18n() i18n: I18nContext) 
   {
-    return this.userService.remove(id);
+    return this.userService.remove(id, i18n);
   }
 }
 
@@ -74,9 +76,9 @@ export class UserProfileController
   //Access: Private (admin and user)
   @Roles(['admin','user'])
   @Get()
-  getProfile(@Req() req)
+  getProfile(@Req() req, @I18n() i18n: I18nContext)
   {
-    return this.userService.getProfile(req.user);
+    return this.userService.getProfile(req.user, i18n);
   }
 
   //Desc: User can Update his/her profile
@@ -84,9 +86,9 @@ export class UserProfileController
   //Access: Private (admin and user)
   @Roles(['admin','user'])
   @Patch()
-  updateProfile(@Req() req, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateUserDto: UpdateUserDto)
+  updateProfile(@Req() req, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateUserDto: UpdateUserDto, @I18n() i18n: I18nContext)
   {
-    return this.userService.update(req.user.id, updateUserDto);
+    return this.userService.update(req.user.id, updateUserDto, i18n);
   }
 
   //Desc: User can UnActive his/her profile
@@ -94,8 +96,8 @@ export class UserProfileController
   //Access: Private (user)
   @Roles(['user'])
   @Delete()
-  unActiveProfile(@Req() req)
+  unActiveProfile(@Req() req, @I18n() i18n: I18nContext)
   {
-    return this.userService.unActiveProfile(req.user);
+    return this.userService.unActiveProfile(req.user, i18n);
   }
 }

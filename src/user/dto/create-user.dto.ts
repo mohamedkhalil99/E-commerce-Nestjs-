@@ -1,12 +1,13 @@
 import { Type } from "class-transformer";
 import { IsArray, IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString, IsUrl, Length, MaxLength, Min, MinLength } from "class-validator";
+import { i18nValidationMessage } from "nestjs-i18n";
 
 class AddressDto 
 {
     @IsString()
     name: string; 
 
-    @IsString({ message: 'Address must be a string' })
+    @IsString({ message:i18nValidationMessage('dto.ADDRESS_MUST_BE_A_STRING') })
     addressDetails: string;
   
     @IsString()
@@ -18,58 +19,58 @@ class AddressDto
 
 export class CreateUserDto 
 {
-    @IsNotEmpty({message: 'Name is required'})
-    @IsString({message: 'Name must be a string'})
-    @MinLength(3, {message: 'Name must be at least 3 characters'})
-    @MaxLength(30, {message: 'Name must be at most 30 characters'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.NAME_IS_REQUIRED') })
+    @IsString({message:i18nValidationMessage('dto.NAME_MUST_BE_A_STRING') })
+    @MinLength(3, {message:i18nValidationMessage('dto.NAME_AT_LEAST_3') })
+    @MaxLength(30, {message:i18nValidationMessage('dto.NAME_AT_MOST_30') })
     name: string;
 
-    @IsNotEmpty({message: 'Email is required'})
-    @IsString({message: 'Email must be a string'})
-    @IsEmail({}, {message: 'Invalid email format'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.EMAIL_IS_REQUIRED') })
+    @IsString({message:i18nValidationMessage('dto.EMAIL_MUST_BE_A_STRING') })
+    @IsEmail({}, {message:i18nValidationMessage('dto.INVALID_EMAIL_FORMAT') })
     email: string;
 
-    @IsNotEmpty({message: 'Password is required'})
-    @IsString({message: 'Password must be a string'})
-    @MinLength(6, {message: 'Password must be at least 6 characters'})
-    @MaxLength(20, {message: 'Password must be at most 20 characters'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.PASS_IS_REQUIRED') })
+    @IsString({message:i18nValidationMessage('dto.PASS_MUST_BE_A_STRING') })
+    @MinLength(6, {message:i18nValidationMessage('dto.PASS_AT_LEAST_6') })
+    @MaxLength(20, {message:i18nValidationMessage('dto.PASS_AT_MOST_20') })
     password: string;
 
-    @IsString({message: 'Role must be a string'})
-    @IsEnum(['admin', 'user'], {message: 'Role must be either admin or user'})
+    @IsString({message:i18nValidationMessage('dto.ROLE_MUST_BE_A_STRING') })
+    @IsEnum(['admin', 'user'], {message:i18nValidationMessage('dto.ROLE_ADMIN_OR_USER') })
     role: string;
 
     @IsOptional()
-    @IsString({message: 'Avatar must be a string'})
-    @IsUrl({}, {message: 'Invalid URL format'})
+    @IsString({message:i18nValidationMessage('dto.AVATAR_MUST_BE_A_STRING') })
+    @IsUrl({}, {message:i18nValidationMessage('dto.INVALID_URL_FORMAT') })
     avatar: string;
 
-    @IsNotEmpty({message: 'Age is required'})
-    @IsNumber({}, {message: 'Age must be a number'})
-    @Min(15, {message: 'Age must be at least 15 years old'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.AGE_IS_REQUIRED') })
+    @IsNumber({}, {message:i18nValidationMessage('dto.AGE_MUST_BE_A_NUMBER') })
+    @Min(15, {message:i18nValidationMessage('dto.AGE_AT_LEAST_15') })
     age: number;
 
-    @IsNotEmpty({message: 'Phone number is required'})
-    @IsString({message: 'Phone number must be a string'})
-    @IsPhoneNumber('EG',{message:'Phone number must be a valid Egyptian phone number'})
-    @Length(11, 11, {message: 'Phone number must be 11 characters'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.PHONE_NUMBER_IS_REQUIRED') })
+    @IsString({message:i18nValidationMessage('dto.PHONE_NUMBER_MUST_BE_A_STRING') })
+    @IsPhoneNumber('EG',{message:i18nValidationMessage('dto.PHONE_NUMBER_MUST_EG') })
+    @Length(11, 11, {message:i18nValidationMessage('dto.PHONE_NUMBER_MUST_BE_11') })
     phoneNumber: string;
 
-    @IsNotEmpty({message:'Address is required'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.ADDRESS_IS_REQUIRED') })
     @IsArray()
     @Type(()=>AddressDto)
     address: AddressDto[];
 
     @IsOptional()
-    @IsBoolean({message: 'Active must be a boolean'})
-    @IsEnum([true, false], {message: 'Active must be either true or false'})
+    @IsBoolean({message:i18nValidationMessage('dto.ACTIVE_MUST_BE_A_BOOLEAN') })
+    @IsEnum([true, false], {message:i18nValidationMessage('dto.ACTIVE_TRUE_OR_FALSE') })
     active: boolean;
 
-    @IsString({message: 'Verification code must be a string'})
-    @Length(6, 6, {message: 'Verification code must be 6 characters'})
+    @IsString({message:i18nValidationMessage('dto.') })
+    @Length(6, 6, {message:i18nValidationMessage('dto.') })
     verificationCode: string;
 
-    @IsString({message:'Gender must be a string'})
-    @IsEnum(['male','female'],{message:'Gender must be either male or female'})
+    @IsString({message:i18nValidationMessage('dto.') })
+    @IsEnum(['male','female'],{message:i18nValidationMessage('dto.') })
     gender: string;
 }

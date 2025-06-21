@@ -1,0 +1,13 @@
+{
+    "USER":"User",
+    "ALREADY_EXISTS":"{property} already exists",
+    "CREATED_SUCCESSFULLY":"{property} created successfully",
+    "INVALID_LIMIT_QUERY_PARAMETERS":"Invalid Limit query parameters",
+    "INVALID_SKIP_QUERY_PARAMETERS":"Invalid Skip query parameters",
+    "INVALID_SORT_QUERY_PARAMETERS":"Invalid Sort query parameters",
+    "NOT_FOUND":"{property} not found",
+    "UPDATED_SUCCESSFULLY":"{property} updated successfully",
+    "DELETED_SUCCESSFULLY":"{property} deleted successfully",
+    "ALREADY_UNACTIVATED":"{property} already unactivated",
+    "UNACTIVATED_SUCCESSFULLY":"{property} Unactivated successfully"
+}
