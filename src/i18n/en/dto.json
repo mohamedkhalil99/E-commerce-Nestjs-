@@ -28,5 +28,9 @@
     "VERIFICATION_MUST_BE_A_STRING":"Verification code must be a string",
     "VERIFICATION_MUST_BE_6":"Verification code must be 6 characters",
     "GENDER_MUST_BE_A_STRING":"Gender must be a string",
-    "GENDER_MALE_FEMALE":"Gender must be either male or female"
+    "GENDER_MALE_FEMALE":"Gender must be either male or female",
+
+    "TAX_MUST_BE_A_NUMBER":"Tax Must be a Number",
+    "SHIPPING_FEES_MUST_BE_A_NUMBER":"Shipping Fee Must be a Number",
+    "COD_FEE_MUST_BE_A_NUMBER":"cashOnDeliveryFees Must be a Number"
 }

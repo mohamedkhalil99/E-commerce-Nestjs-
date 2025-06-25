@@ -28,5 +28,10 @@
     "VERIFICATION_MUST_BE_A_STRING":"الرقم التأكيدي يجب أن يكون نص",
     "VERIFICATION_MUST_BE_6":"الرقم التأكيدي يجب أن يتكون من 6 أرقام",
     "GENDER_MUST_BE_A_STRING":"النوع يجب أن يكون نص",
-    "GENDER_MALE_FEMALE":"النوع يجب أن يكون ذكر أو أنثي"
+    "GENDER_MALE_FEMALE":"النوع يجب أن يكون ذكر أو أنثي",
+
+
+    "TAX_MUST_BE_A_NUMBER":"الضريبة يجب أن تكون رقم",
+    "SHIPPING_FEES_MUST_BE_A_NUMBER":"رسوم التوصيل يجب أن تكون رقم",
+    "COD_FEE_MUST_BE_A_NUMBER":"رسوم الدفع عند الأستلام يجب أن تكون رقم"
 }
