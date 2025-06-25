@@ -47,6 +47,7 @@ export class UserController {
   //Access: Private (admin only)
   @Roles(['admin'])
   @Patch(':id')
+  @UseFilters(new I18nValidationExceptionFilter())
   update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateUserDto: UpdateUserDto, @I18n() i18n: I18nContext) 
   {
     return this.userService.update(id, updateUserDto, i18n);
@@ -86,6 +87,7 @@ export class UserProfileController
   //Access: Private (admin and user)
   @Roles(['admin','user'])
   @Patch()
+  @UseFilters(new I18nValidationExceptionFilter())
   updateProfile(@Req() req, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateUserDto: UpdateUserDto, @I18n() i18n: I18nContext)
   {
     return this.userService.update(req.user.id, updateUserDto, i18n);

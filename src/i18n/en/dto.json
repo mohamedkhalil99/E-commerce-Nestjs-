@@ -3,6 +3,7 @@
     "NAME_MUST_BE_A_STRING":"Name must be a string",
     "NAME_AT_LEAST_3":"Name must be at least 3 characters",
     "NAME_AT_MOST_30":"Name must be at most 30 characters",
+    "NAME_AT_MOST_100":"Name must be at most 100 characters",
     "EMAIL_IS_REQUIRED":"Email is required",
     "EMAIL_MUST_BE_A_STRING":"Email must be a string",
     "INVALID_EMAIL_FORMAT":"Invalid email format",
@@ -32,5 +33,7 @@
 
     "TAX_MUST_BE_A_NUMBER":"Tax Must be a Number",
     "SHIPPING_FEES_MUST_BE_A_NUMBER":"Shipping Fee Must be a Number",
-    "COD_FEE_MUST_BE_A_NUMBER":"cashOnDeliveryFees Must be a Number"
+    "COD_FEE_MUST_BE_A_NUMBER":"cashOnDeliveryFees Must be a Number",
+
+    "WEBSITE_IS_REQUIRED":"Website is required"
 }

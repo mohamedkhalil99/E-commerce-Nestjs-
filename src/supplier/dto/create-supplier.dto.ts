@@ -1,14 +1,15 @@
 import { IsNotEmpty, IsString, IsUrl, MaxLength, MinLength } from "class-validator";
+import { i18nValidationMessage } from "nestjs-i18n";
 
 export class CreateSupplierDto 
 {
-    @IsNotEmpty({ message: 'Name is required' })
-    @IsString({ message: 'Name must be a string' })
-    @MinLength(3, { message: 'Name is too short' })
-    @MaxLength(100, { message: 'Name is too long' })
+    @IsNotEmpty({ message:i18nValidationMessage('dto.NAME_IS_REQUIRED')})
+    @IsString({ message:i18nValidationMessage('dto.NAME_MUST_BE_A_STRING')})
+    @MinLength(3, { message:i18nValidationMessage('dto.NAME_AT_LEAST_3')})
+    @MaxLength(100, { message:i18nValidationMessage('dto.NAME_AT_MOST_100')})
     name:string;
 
-    @IsNotEmpty({message:'Website is required'})
-    @IsUrl({},{message:'The Website Must be a Valid URL'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.WEBSITE_IS_REQUIRED')})
+    @IsUrl({},{message:i18nValidationMessage('dto.INVALID_URL_FORMAT')})
     website:string;
 }
