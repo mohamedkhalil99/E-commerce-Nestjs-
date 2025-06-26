@@ -5,6 +5,7 @@
     "CATEGORY":"الفئة",
     "SUB_CATEGORY":"الفئة الفرعية",
     "BRAND":"ماركة",
+    "PRODUCT":"المنتج",
     "ALREADY_EXISTS":"{property} موجود بالفعل",
     "CREATED_SUCCESSFULLY":"{property} تم الأنشاء بنجاح",
     "INVALID_LIMIT_QUERY_PARAMETERS":"عدد النتائج المطلوب غير صحيح",
@@ -14,6 +15,8 @@
     "UPDATED_SUCCESSFULLY":"{property} تم تحديث",
     "DELETED_SUCCESSFULLY":"{property} تم حذف",
     "ALREADY_UNACTIVATED":"غير مفعل بالفعل {property}",
-    "UNACTIVATED_SUCCESSFULLY":"{property} تم تفعيل"
+    "UNACTIVATED_SUCCESSFULLY":"{property} تم تفعيل",
+    "AFTER_DIS_CANNOT_GREATER_PRICE":"السعر بعد الخصم لا يمكن أن يتخطي السعر",
+    "STOCK_CANNOT_INCREASED":"المخزون لا يمكن أن يزيد"
 
 }
