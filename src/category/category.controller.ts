@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ValidationPipe, UseFilters } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { AuthGuard } from 'src/user/guards/auth.guard';
 import { Roles } from 'src/user/decorators/roles.decorator';
+import { I18n, I18nContext, I18nValidationExceptionFilter } from 'nestjs-i18n';
 
 @Controller('category')
 @UseGuards(AuthGuard)//Use the AuthGuard to protect the routes
@@ -16,9 +17,10 @@ export class CategoryController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Post()
-  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createCategoryDto: CreateCategoryDto) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createCategoryDto: CreateCategoryDto, @I18n() i18n: I18nContext) 
   {
-    return this.categoryService.create(createCategoryDto);
+    return this.categoryService.create(createCategoryDto, i18n);
   }
 
   //Desc: Admin or User can Get all categories
@@ -34,9 +36,9 @@ export class CategoryController
   //Route: GET api/v1/category/:id
   //Access: Public
   @Get(':id')
-  findOne(@Param('id') id: string) 
+  findOne(@Param('id') id: string, @I18n() i18n: I18nContext) 
   {
-    return this.categoryService.findOne(id);
+    return this.categoryService.findOne(id, i18n);
   }
 
   //Desc: Admin can Update a category
@@ -44,9 +46,10 @@ export class CategoryController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Patch(':id')
-  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateCategoryDto: UpdateCategoryDto) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateCategoryDto: UpdateCategoryDto, @I18n() i18n: I18nContext) 
   {
-    return this.categoryService.update(id, updateCategoryDto);
+    return this.categoryService.update(id, updateCategoryDto, i18n);
   }
 
   //Desc: Admin can Delete a category
@@ -54,8 +57,8 @@ export class CategoryController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Delete(':id')
-  remove(@Param('id') id: string) 
+  remove(@Param('id') id: string, @I18n() i18n: I18nContext) 
   {
-    return this.categoryService.remove(id);
+    return this.categoryService.remove(id, i18n);
   }
 }

@@ -2,6 +2,7 @@
     "NAME_IS_REQUIRED":"الأسم مطلوب",
     "NAME_MUST_BE_A_STRING":"الأسم يجب أن يكون نص",
     "NAME_AT_LEAST_3":"الأسم يجب أن لا يقل عن 3 حروف",
+    "NAME_AT_MOST_15":"الأسم يجب أن لا يزيد عن 15 حرف",
     "NAME_AT_MOST_30":"الأسم يجب أن لا يزيد عن 30 حرف",
     "NAME_AT_MOST_100":"الأسم يجب أن لا يزيد عن 100 حرف",
     "EMAIL_IS_REQUIRED":"الأيميل مطلوب",
@@ -36,5 +37,8 @@
     "SHIPPING_FEES_MUST_BE_A_NUMBER":"رسوم التوصيل يجب أن تكون رقم",
     "COD_FEE_MUST_BE_A_NUMBER":"رسوم الدفع عند الأستلام يجب أن تكون رقم",
 
-    "WEBSITE_IS_REQUIRED":"الموقع الالكتروني مطلوب"
+    "WEBSITE_IS_REQUIRED":"الموقع الالكتروني مطلوب",
+
+    "IMAGE_MUST_BE_A_STRING":"الصورة يجب أن تكون نص",
+    "IMAGE_MUST_BE_A_URL":"الصورة يجب أن تكون رابط"
 }

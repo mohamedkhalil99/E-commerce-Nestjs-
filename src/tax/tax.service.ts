@@ -16,7 +16,7 @@ export class TaxService
     if(!ifTaxExists)
       {
         const newTax= await this.taxModel.create(createTaxDto);
-        return{status:201, message:i18n.t('service.CREATED_SUCCESSFULLY.', {args:{property:i18n.t('service.TAX')}}), data:newTax};//'Tax created successfully'
+        return{status:201, message:i18n.t('service.CREATED_SUCCESSFULLY', {args:{property:i18n.t('service.TAX')}}), data:newTax};//'Tax created successfully'
       }
     const updateTax= await this.taxModel.findOneAndUpdate({},createTaxDto,{new:true}).select('-__v');
     return{status:201, message:i18n.t('service.UPDATED_SUCCESSFULLY', {args:{property:i18n.t('service.TAX')}}), data:updateTax};//'Tax Updated successfully'

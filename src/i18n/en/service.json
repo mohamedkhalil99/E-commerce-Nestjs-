@@ -1,6 +1,7 @@
 {
     "USER":"User",
     "TAX":"Tax",
+    "CATEGORY":"Category",
     "SUPPLIER":"Supplier",
     "ALREADY_EXISTS":"{property} already exists",
     "CREATED_SUCCESSFULLY":"{property} created successfully",
