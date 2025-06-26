@@ -39,5 +39,7 @@
     "WEBSITE_IS_REQUIRED":"Website is required",
 
     "IMAGE_MUST_BE_A_STRING":"Image must be a string",
-    "IMAGE_MUST_BE_A_URL":"Image must be a URL"
+    "IMAGE_MUST_BE_A_URL":"Image must be a URL",
+    "CATEGORY_IS_REQUIRED":"Category is required",
+    "CATEGORY_MUST_BE_A_STRING":"Category must be a string"
 }

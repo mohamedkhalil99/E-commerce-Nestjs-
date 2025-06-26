@@ -40,5 +40,7 @@
     "WEBSITE_IS_REQUIRED":"الموقع الالكتروني مطلوب",
 
     "IMAGE_MUST_BE_A_STRING":"الصورة يجب أن تكون نص",
-    "IMAGE_MUST_BE_A_URL":"الصورة يجب أن تكون رابط"
+    "IMAGE_MUST_BE_A_URL":"الصورة يجب أن تكون رابط",
+    "CATEGORY_IS_REQUIRED":"الفئة مطلوبة",
+    "CATEGORY_MUST_BE_A_STRING":"الفئة يجب أن تكون نص"
 }

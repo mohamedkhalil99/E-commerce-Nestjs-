@@ -3,6 +3,7 @@
     "TAX":"الضريبة",
     "SUPPLIER":"المزود",
     "CATEGORY":"الفئة",
+    "SUB_CATEGORY":"الفئة الفرعية",
     "ALREADY_EXISTS":"{property} موجود بالفعل",
     "CREATED_SUCCESSFULLY":"{property} تم الأنشاء بنجاح",
     "INVALID_LIMIT_QUERY_PARAMETERS":"عدد النتائج المطلوب غير صحيح",
