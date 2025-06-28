@@ -75,5 +75,16 @@
     "BRAND_MUST_BE_A_STRING":"الماركة يجب أن تكون نص",
     "BRAND_MUST_BE_A_MONGO_ID":"الماركة يجب أن تكون رقم مونجو التعريفي",
     "AVG_RATING_MUST_BE_A_NUMBER":"متوسط التقييمات يجب أن يكون رقم",
-    "RATING_QUN_MUST_BE_A_NUMBER":"عدد التقييمات يجب أن يكون رقم"
+    "RATING_QUN_MUST_BE_A_NUMBER":"عدد التقييمات يجب أن يكون رقم",
+
+    "TITLE_NEED_IS_REQUIRED":"عنوان الحاجة مطلوبة",
+    "TITLE_NEED_MUST_BE_A_STRING":"عنوان الحاجة يجب أن يكون نص",
+    "TITLE_NEED_IS_SHORT":"عنوان الحاجة قصير جدا",
+    "TITLE_NEED_IS_LONG":"عنوان الحاجة طويل جدا",
+    "DETAILS_IS_REQUIRED":"التفاصيل مطلوبة",
+    "DETAILS_MUST_BE_A_STRING":"التفاصيل يجب أن تكون نص",
+    "DETAILS_IS_SHORT":"التفاصيل قصيرة جدا",
+    "QUANTITY_IS_REQUIRED":"الكمية مطلوبة",
+    "QUANTITY_MUST_BE_A_NUMBER":"الكمية يجب أن تكون رقم",
+    "QUANTITY_MIN_IS_1":"أقل كمية هي 1"
 }

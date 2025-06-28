@@ -1,24 +1,25 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { i18nValidationMessage } from "nestjs-i18n";
 
 export class CreateProductRequestDto 
 {
-    @IsNotEmpty({message:'TitleNeed is required'})
-    @IsString({message:'TitleNeed Must be a string'})
-    @MinLength(3, { message: 'TitleNeed is too short' })
-    @MaxLength(15, { message: 'TitleNeed is too long' })
+    @IsNotEmpty({message:i18nValidationMessage('dto.TITLE_NEED_IS_REQUIRED') })
+    @IsString({message:i18nValidationMessage('dto.TITLE_NEED_MUST_BE_A_STRING') })
+    @MinLength(3, { message:i18nValidationMessage('dto.TITLE_NEED_IS_SHORT') })
+    @MaxLength(15, { message:i18nValidationMessage('dto.TITLE_NEED_IS_LONG') })
     titleNeed: string;
 
-    @IsNotEmpty({message:'Details is required'})
-    @IsString({message:'Details Must be a string'})
-    @MinLength(5, { message: 'Details is too short' })
+    @IsNotEmpty({message:i18nValidationMessage('dto.DETAILS_IS_REQUIRED') })
+    @IsString({message:i18nValidationMessage('dto.DETAILS_MUST_BE_A_STRING') })
+    @MinLength(5, { message:i18nValidationMessage('dto.DETAILS_IS_SHORT') })
     details:string;
 
-    @IsNotEmpty({message:'Quantity is required'})
-    @IsNumber({},{message:'Quantity Must be a string'})
-    @Min(1,{message:'The Minimum Quantity is 1'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.QUANTITY_IS_REQUIRED') })
+    @IsNumber({},{message:i18nValidationMessage('dto.QUANTITY_MUST_BE_A_NUMBER') })
+    @Min(1,{message:i18nValidationMessage('dto.QUANTITY_MIN_IS_1') })
     quantity:number;
 
     @IsOptional()
-    @IsString({message:'Category Must be a string'})
+    @IsString({message:i18nValidationMessage('dto.CATEGORY_MUST_BE_A_STRING') })
     category:string;
 }

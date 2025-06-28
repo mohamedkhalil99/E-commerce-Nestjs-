@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseGuards, Req, UseFilters } from '@nestjs/common';
 import { AuthGuard } from 'src/user/guards/auth.guard';
 import { Roles } from 'src/user/decorators/roles.decorator';
 import { ProductRequestService } from './product-request.service';
 import { CreateProductRequestDto } from './dto/create-product-request.dto';
 import { UpdateProductRequestDto } from './dto/update-product-request.dto';
+import { I18n, I18nContext, I18nValidationExceptionFilter } from 'nestjs-i18n';
 
 @Controller('product-request')
 @UseGuards(AuthGuard)//Use the AuthGuard to protect the routes
@@ -16,9 +17,10 @@ export class ProductRequestController
   //Access: Private (user only)
   @Roles(['user'])
   @Post()
-  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createProductRequestDto: CreateProductRequestDto,@Req() req) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createProductRequestDto: CreateProductRequestDto, @Req() req, @I18n() i18n: I18nContext) 
   {
-    return this.productRequestService.create({...createProductRequestDto,user: req.user.id});
+    return this.productRequestService.create({...createProductRequestDto, user: req.user.id}, i18n);
   }
 
   //Desc: Admin can Get All Product Requests
@@ -36,9 +38,9 @@ export class ProductRequestController
   //Access: Private (admin and user)
   @Roles(['admin','user'])
   @Get(':id')
-  findOne(@Param('id') id: string,@Req() req) 
+  findOne(@Param('id') id: string, @Req() req, @I18n() i18n: I18nContext) 
   {
-    return this.productRequestService.findOne(id,req);
+    return this.productRequestService.findOne(id, req, i18n);
   }
 
   //Desc: User can Update Only his Product Request
@@ -46,9 +48,10 @@ export class ProductRequestController
   //Access: Private (user)
   @Roles(['user'])
   @Patch(':id')
-  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateProductRequestDto: UpdateProductRequestDto,@Req() req) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateProductRequestDto: UpdateProductRequestDto,@Req() req, @I18n() i18n: I18nContext) 
   {
-    return this.productRequestService.update(id,updateProductRequestDto, req);
+    return this.productRequestService.update(id, updateProductRequestDto, req, i18n);
   }
 
   //Desc: User can Delete Only his Product Request
@@ -56,8 +59,8 @@ export class ProductRequestController
   //Access: Private (user)
   @Roles(['user'])
   @Delete(':id')
-  remove(@Param('id') id: string,@Req() req) 
+  remove(@Param('id') id: string, @Req() req, @I18n() i18n: I18nContext) 
   {
-    return this.productRequestService.remove(id,req);
+    return this.productRequestService.remove(id, req, i18n);
   }
 }

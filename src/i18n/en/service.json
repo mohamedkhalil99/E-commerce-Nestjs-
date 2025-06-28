@@ -6,6 +6,7 @@
     "SUPPLIER":"Supplier",
     "BRAND":"Brand",
     "PRODUCT":"Product",
+    "PRODUCT_REQUEST":"Product Request",
     "ALREADY_EXISTS":"{property} already exists",
     "CREATED_SUCCESSFULLY":"{property} created successfully",
     "INVALID_LIMIT_QUERY_PARAMETERS":"Invalid Limit query parameters",

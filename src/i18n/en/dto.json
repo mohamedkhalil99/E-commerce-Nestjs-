@@ -74,5 +74,16 @@
     "BRAND_MUST_BE_A_STRING":"Brand must be a string",
     "BRAND_MUST_BE_A_MONGO_ID":"Brand must be a Mongo ID",
     "AVG_RATING_MUST_BE_A_NUMBER":"Average Rating must be a number",
-    "RATING_QUN_MUST_BE_A_NUMBER":"Rating Quantity must be a number"
+    "RATING_QUN_MUST_BE_A_NUMBER":"Rating Quantity must be a number",
+
+    "TITLE_NEED_IS_REQUIRED":"TitleNeed is required",
+    "TITLE_NEED_MUST_BE_A_STRING":"TitleNeed Must be a string",
+    "TITLE_NEED_IS_SHORT":"TitleNeed is too short",
+    "TITLE_NEED_IS_LONG":"TitleNeed is too long",
+    "DETAILS_IS_REQUIRED":"Details is required",
+    "DETAILS_MUST_BE_A_STRING":"Details Must be a string",
+    "DETAILS_IS_SHORT":"Details is too short",
+    "QUANTITY_IS_REQUIRED":"Quantity is required",
+    "QUANTITY_MUST_BE_A_NUMBER":"Quantity Must be a number",
+    "QUANTITY_MIN_IS_1":"The Minimum Quantity is 1"
 }
