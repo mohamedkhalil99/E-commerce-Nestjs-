@@ -7,6 +7,7 @@
     "BRAND":"ماركة",
     "PRODUCT":"المنتج",
     "PRODUCT_REQUEST":"طلب منتج",
+    "COUPON":"كوبون",
     "ALREADY_EXISTS":"{property} موجود بالفعل",
     "CREATED_SUCCESSFULLY":"{property} تم الأنشاء بنجاح",
     "INVALID_LIMIT_QUERY_PARAMETERS":"عدد النتائج المطلوب غير صحيح",
@@ -18,6 +19,7 @@
     "ALREADY_UNACTIVATED":"غير مفعل بالفعل {property}",
     "UNACTIVATED_SUCCESSFULLY":"{property} تم تفعيل",
     "AFTER_DIS_CANNOT_GREATER_PRICE":"السعر بعد الخصم لا يمكن أن يتخطي السعر",
-    "STOCK_CANNOT_INCREASED":"المخزون لا يمكن أن يزيد"
+    "STOCK_CANNOT_INCREASED":"المخزون لا يمكن أن يزيد",
 
+    "COUPON_MUST_BE_IN_FUTURE":"يجب أن يكون تاريخ انتهاء صلاحية الكوبون تاريخ في المستقبل"
 }

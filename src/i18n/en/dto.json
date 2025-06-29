@@ -3,6 +3,7 @@
     "NAME_MUST_BE_A_STRING":"Name must be a string",
     "NAME_AT_LEAST_3":"Name must be at least 3 characters",
     "NAME_AT_MOST_15":"Name must be at most 15 characters",
+    "NAME_AT_MOST_20":"Name must be at most 20 characters",
     "NAME_AT_MOST_30":"Name must be at most 30 characters",
     "NAME_AT_MOST_100":"Name must be at most 100 characters",
     "EMAIL_IS_REQUIRED":"Email is required",
@@ -85,5 +86,11 @@
     "DETAILS_IS_SHORT":"Details is too short",
     "QUANTITY_IS_REQUIRED":"Quantity is required",
     "QUANTITY_MUST_BE_A_NUMBER":"Quantity Must be a number",
-    "QUANTITY_MIN_IS_1":"The Minimum Quantity is 1"
+    "QUANTITY_MIN_IS_1":"The Minimum Quantity is 1",
+
+    "COUPON_EXP_IS_REQUIRED":"Coupon expire date is required",
+    "COUPON_EXP_MUST_BE_A_VALID_DATE":"Coupon expire date must be a valid date",
+    "COUPON_DIS_IS_REQUIRED":"Coupon discount is required",
+    "COUPON_DIS_MUST_BE_A_NUMBER":"Coupon discount must be a number",
+    "COUPON_DIS_AT_LEAST_1":"Coupon discount must be at least 1"
 }

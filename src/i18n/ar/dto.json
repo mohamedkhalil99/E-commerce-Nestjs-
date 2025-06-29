@@ -3,6 +3,7 @@
     "NAME_MUST_BE_A_STRING":"الأسم يجب أن يكون نص",
     "NAME_AT_LEAST_3":"الأسم يجب أن لا يقل عن 3 حروف",
     "NAME_AT_MOST_15":"الأسم يجب أن لا يزيد عن 15 حرف",
+    "NAME_AT_MOST_20":"الأسم يجب أن لا يزيد عن 20 حرف",
     "NAME_AT_MOST_30":"الأسم يجب أن لا يزيد عن 30 حرف",
     "NAME_AT_MOST_100":"الأسم يجب أن لا يزيد عن 100 حرف",
     "EMAIL_IS_REQUIRED":"الأيميل مطلوب",
@@ -86,5 +87,11 @@
     "DETAILS_IS_SHORT":"التفاصيل قصيرة جدا",
     "QUANTITY_IS_REQUIRED":"الكمية مطلوبة",
     "QUANTITY_MUST_BE_A_NUMBER":"الكمية يجب أن تكون رقم",
-    "QUANTITY_MIN_IS_1":"أقل كمية هي 1"
+    "QUANTITY_MIN_IS_1":"أقل كمية هي 1",
+
+    "COUPON_EXP_IS_REQUIRED":"تاريخ انتهاء صلاحية الكوبون مطلوب",
+    "COUPON_EXP_MUST_BE_A_VALID_DATE":"يجب أن يكون تاريخ انتهاء صلاحية الكوبون تاريخ صحيح",
+    "COUPON_DIS_IS_REQUIRED":"خصم الكوبون مطلوب",
+    "COUPON_DIS_MUST_BE_A_NUMBER":"يجب أن يكون خصم الكوبون رقم",
+    "COUPON_DIS_AT_LEAST_1":"يجب ألا يقل خصم الكوبون عن 1"
 }

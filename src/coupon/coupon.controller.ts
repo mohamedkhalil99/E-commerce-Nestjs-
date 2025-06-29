@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ValidationPipe, UseFilters } from '@nestjs/common';
 import { CouponService } from './coupon.service';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
 import { AuthGuard } from 'src/user/guards/auth.guard';
 import { Roles } from 'src/user/decorators/roles.decorator';
+import { I18n, I18nContext, I18nValidationExceptionFilter } from 'nestjs-i18n';
 
 @Controller('coupon')
 @UseGuards(AuthGuard)//Use the AuthGuard to protect the routes
@@ -16,9 +17,10 @@ export class CouponController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Post()
-  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createCouponDto: CreateCouponDto) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createCouponDto: CreateCouponDto, @I18n() i18n: I18nContext) 
   {
-    return this.couponService.create(createCouponDto);
+    return this.couponService.create(createCouponDto, i18n);
   }
 
   //Desc: Admin can Get all coupons
@@ -36,9 +38,9 @@ export class CouponController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Get(':id')
-  findOne(@Param('id') id: string) 
+  findOne(@Param('id') id: string, @I18n() i18n: I18nContext) 
   {
-    return this.couponService.findOne(id);
+    return this.couponService.findOne(id, i18n);
   }
 
   //Desc: Admin can Update a coupon
@@ -46,9 +48,10 @@ export class CouponController
   //Access: Private (admin only)  
   @Roles(['admin'])
   @Patch(':id')
-  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateCouponDto: UpdateCouponDto) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateCouponDto: UpdateCouponDto, @I18n() i18n: I18nContext) 
   {
-    return this.couponService.update(id, updateCouponDto);
+    return this.couponService.update(id, updateCouponDto, i18n);
   }
 
   //Desc: Admin can Delete a coupon
@@ -56,8 +59,8 @@ export class CouponController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Delete(':id')
-  remove(@Param('id') id: string) 
+  remove(@Param('id') id: string, @I18n() i18n: I18nContext) 
   {
-    return this.couponService.remove(id);
+    return this.couponService.remove(id, i18n);
   }
 }

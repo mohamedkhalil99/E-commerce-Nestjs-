@@ -7,6 +7,7 @@
     "BRAND":"Brand",
     "PRODUCT":"Product",
     "PRODUCT_REQUEST":"Product Request",
+    "COUPON":"Coupon",
     "ALREADY_EXISTS":"{property} already exists",
     "CREATED_SUCCESSFULLY":"{property} created successfully",
     "INVALID_LIMIT_QUERY_PARAMETERS":"Invalid Limit query parameters",
@@ -18,5 +19,7 @@
     "ALREADY_UNACTIVATED":"{property} already unactivated",
     "UNACTIVATED_SUCCESSFULLY":"{property} Unactivated successfully",
     "AFTER_DIS_CANNOT_GREATER_PRICE":"Price After Discount cannot be greater than Price",
-    "STOCK_CANNOT_INCREASED":"Stock cannot be increased"
+    "STOCK_CANNOT_INCREASED":"Stock cannot be increased",
+
+    "COUPON_MUST_BE_IN_FUTURE":"Coupon expire date must be a future date"
 }

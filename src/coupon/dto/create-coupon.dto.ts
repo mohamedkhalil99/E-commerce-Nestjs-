@@ -1,19 +1,20 @@
 import { IsDateString, IsNotEmpty, IsNumber, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { i18nValidationMessage } from "nestjs-i18n";
 
 export class CreateCouponDto 
 {
-    @IsNotEmpty({message: "Coupon name is required"})
-    @IsString({message: "Coupon name must be a string"})
-    @MinLength(3, {message: "Coupon name must be at least 3 characters"})
-    @MaxLength(20, {message: "Coupon name must be at most 20 characters"})
-    name: string;
+    @IsNotEmpty({ message:i18nValidationMessage('dto.NAME_IS_REQUIRED')})
+    @IsString({ message:i18nValidationMessage('dto.NAME_MUST_BE_A_STRING')})
+    @MinLength(3, { message:i18nValidationMessage('dto.NAME_AT_LEAST_3')})
+    @MaxLength(20, { message:i18nValidationMessage('dto.NAME_AT_MOST_20')})
+    name:string;
 
-    @IsNotEmpty({message: "Coupon expire date is required"})
-    @IsDateString({},{message: "Coupon expire date must be a valid date"})
+    @IsNotEmpty({message:i18nValidationMessage('dto.COUPON_EXP_IS_REQUIRED') })
+    @IsDateString({},{message:i18nValidationMessage('dto.COUPON_EXP_MUST_BE_A_VALID_DATE') })
     expireDate: Date;
 
-    @IsNotEmpty({message: "Coupon discount is required"})
-    @IsNumber({}, {message: "Coupon discount must be a number"})
-    @Min(1, {message: "Coupon discount must be at least 1"})
+    @IsNotEmpty({message:i18nValidationMessage('dto.COUPON_DIS_IS_REQUIRED') })
+    @IsNumber({}, {message:i18nValidationMessage('dto.COUPON_DIS_MUST_BE_A_NUMBER') })
+    @Min(1, {message:i18nValidationMessage('dto.COUPON_DIS_AT_LEAST_1') })
     discount: number;
 }
