@@ -93,5 +93,16 @@
     "COUPON_EXP_MUST_BE_A_VALID_DATE":"يجب أن يكون تاريخ انتهاء صلاحية الكوبون تاريخ صحيح",
     "COUPON_DIS_IS_REQUIRED":"خصم الكوبون مطلوب",
     "COUPON_DIS_MUST_BE_A_NUMBER":"يجب أن يكون خصم الكوبون رقم",
-    "COUPON_DIS_AT_LEAST_1":"يجب ألا يقل خصم الكوبون عن 1"
+    "COUPON_DIS_AT_LEAST_1":"يجب ألا يقل خصم الكوبون عن 1",
+
+    "REVIEW_TEXT_MUST_BE_A_STRING":"نص المراجعة يجب أن يكون نص",
+    "REVIEW_TEXT_AT_LEAST_3":"نص المراجعة يجب أن يكون 3 أحرف على الأقل",
+    "REVIEW_TEXT_AT_MOST_100":"نص المراجعة يجب أن يكون 100 حرف على الأكثر",
+    "RATING_IS_REQUIRED":"التقييم مطلوب",
+    "RATING_MUST_BE_A_NUMBER":"التقييم يجب أن يكون رقم",
+    "RATING_AT_LEAST_1":"التقييم يجب أن يكون نجمة واحدة على الأقل",
+    "RATING_AT_MOST_5":"لتقييم يجب أن يكون 5 نجوم على الأكثر",
+    "PRODUCT_IS_REQUIRED":"المنتج مطلوب",
+    "PRODUCT_MUST_BE_A_STRING":"يجب أن يكون المنتج نص",
+    "PRODUCT_MUST_BE_A_MONGO_ID":"المنتج يجب أن يكون رقم مونجو التعريفي"
 }

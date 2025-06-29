@@ -1,21 +1,22 @@
 import { IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
+import { i18nValidationMessage } from "nestjs-i18n";
 
 export class CreateReviewDto 
 {
     @IsOptional()
-    @IsString({message:'Review text must be a string'})
-    @MinLength(3,{message:'Review text must be at least 3 characters'})
-    @MaxLength(100,{message:'Review text must be at most 100 characters'})
+    @IsString({message:i18nValidationMessage('dto.REVIEW_TEXT_MUST_BE_A_STRING') })
+    @MinLength(3,{message:i18nValidationMessage('dto.REVIEW_TEXT_AT_LEAST_3') })
+    @MaxLength(100,{message:i18nValidationMessage('dto.REVIEW_TEXT_AT_MOST_100') })
     reviewText:string;
 
-    @IsNotEmpty({message:'Rating is required'})
-    @IsNumber({},{message:'Rating must be a number'})
-    @Min(1,{message:'Rating must be at least 1 star'})
-    @Max(5,{message:'Rating must be at most 5 star'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.RATING_IS_REQUIRED') })
+    @IsNumber({},{message:i18nValidationMessage('dto.RATING_MUST_BE_A_NUMBER') })
+    @Min(1,{message:i18nValidationMessage('dto.RATING_AT_LEAST_1') })
+    @Max(5,{message:i18nValidationMessage('dto.RATING_AT_MOST_5') })
     rating:number;
 
-    @IsNotEmpty({message:'Product is required'})
-    @IsString({message:'Product Must be a string'})
-    @IsMongoId({message:'Product must be a valid mongo id'})
+    @IsNotEmpty({message:i18nValidationMessage('dto.PRODUCT_IS_REQUIRED') })
+    @IsString({message:i18nValidationMessage('dto.PRODUCT_MUST_BE_A_STRING') })
+    @IsMongoId({message:i18nValidationMessage('dto.PRODUCT_MUST_BE_A_MONGO_ID') })
     product:string;
 }

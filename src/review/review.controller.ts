@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ValidationPipe, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ValidationPipe, Req, UseFilters } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { AuthGuard } from 'src/user/guards/auth.guard';
 import { Roles } from 'src/user/decorators/roles.decorator';
 import { UpdateReviewDto } from './dto/update-review.dto';
+import { I18n, I18nContext, I18nValidationExceptionFilter } from 'nestjs-i18n';
 
 @Controller('review')
 @UseGuards(AuthGuard)//Use the AuthGuard to protect the routes
@@ -16,9 +17,10 @@ export class ReviewController
   //Access: Private (user only)
   @Roles(['user'])
   @Post()
-  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createReviewDto: CreateReviewDto,@Req() req) 
+  @UseFilters(new I18nValidationExceptionFilter())  
+  create(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createReviewDto: CreateReviewDto, @Req() req, @I18n() i18n: I18nContext) 
   {
-    return this.reviewService.create({...createReviewDto,user: req.user.id});
+    return this.reviewService.create({...createReviewDto, user: req.user.id}, i18n);
   }
 
   //Desc: Anyone can Get All Reviews of a product
@@ -45,9 +47,10 @@ export class ReviewController
   //Access: Private (user only)
   @Roles(['user'])
   @Patch(':id')
-  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateReviewDto: UpdateReviewDto,@Req() req) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  update(@Param('id') id: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateReviewDto: UpdateReviewDto, @Req() req, @I18n() i18n: I18nContext) 
   {
-    return this.reviewService.update(id,updateReviewDto,req);
+    return this.reviewService.update(id, updateReviewDto, req, i18n);
   }
 
   //Desc: user can Delete his Review
@@ -55,8 +58,8 @@ export class ReviewController
   //Access: Private (user only)
   @Roles(['user'])
   @Delete(':id')
-  remove(@Param('id') id: string,@Req() req) 
+  remove(@Param('id') id: string, @Req() req, @I18n() i18n: I18nContext) 
   {
-    return this.reviewService.remove(id,req);
+    return this.reviewService.remove(id, req, i18n);
   }
 }

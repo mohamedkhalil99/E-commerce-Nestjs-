@@ -92,5 +92,16 @@
     "COUPON_EXP_MUST_BE_A_VALID_DATE":"Coupon expire date must be a valid date",
     "COUPON_DIS_IS_REQUIRED":"Coupon discount is required",
     "COUPON_DIS_MUST_BE_A_NUMBER":"Coupon discount must be a number",
-    "COUPON_DIS_AT_LEAST_1":"Coupon discount must be at least 1"
+    "COUPON_DIS_AT_LEAST_1":"Coupon discount must be at least 1",
+
+    "REVIEW_TEXT_MUST_BE_A_STRING":"Review text must be a string",
+    "REVIEW_TEXT_AT_LEAST_3":"Review text must be at least 3 characters",
+    "REVIEW_TEXT_AT_MOST_100":"Review text must be at most 100 characters",
+    "RATING_IS_REQUIRED":"Rating is required",
+    "RATING_MUST_BE_A_NUMBER":"Rating must be a number",
+    "RATING_AT_LEAST_1":"Rating must be at least 1 star",
+    "RATING_AT_MOST_5":"Rating must be at most 5 star",
+    "PRODUCT_IS_REQUIRED":"Product is required",
+    "PRODUCT_MUST_BE_A_STRING":"Product Must be a string",
+    "PRODUCT_MUST_BE_A_MONGO_ID":"Product must be a valid mongo id"
 }
