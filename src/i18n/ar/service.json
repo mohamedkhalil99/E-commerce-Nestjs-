@@ -9,7 +9,9 @@
     "PRODUCT_REQUEST":"طلب منتج",
     "COUPON":"كوبون",
     "REVIEW":"التقييم",
+    "CART":"سلة التسوق",
     "ALREADY_EXISTS":"{property} موجود بالفعل",
+    "INVALID":"غير صالح {property}",
     "CREATED_SUCCESSFULLY":"{property} تم الأنشاء بنجاح",
     "INVALID_LIMIT_QUERY_PARAMETERS":"عدد النتائج المطلوب غير صحيح",
     "INVALID_SKIP_QUERY_PARAMETERS":"عدد العناصر التي سيتم تجاهلها غير صحيح",
@@ -22,5 +24,39 @@
     "AFTER_DIS_CANNOT_GREATER_PRICE":"السعر بعد الخصم لا يمكن أن يتخطي السعر",
     "STOCK_CANNOT_INCREASED":"المخزون لا يمكن أن يزيد",
 
-    "COUPON_MUST_BE_IN_FUTURE":"يجب أن يكون تاريخ انتهاء صلاحية الكوبون تاريخ في المستقبل"
+    "COUPON_MUST_BE_IN_FUTURE":"يجب أن يكون تاريخ انتهاء صلاحية الكوبون تاريخ في المستقبل",
+    
+    "PRODUCT_OUT_OF_STOCK":"المنتج غير متوفر",
+    "STOCK_LOWER_THAN_QUANTITY":"مخزون المنتج أقل من الكمية المطلوبة",
+    "PRODUCT_ADDED_TO_CART":"تمت إضافة المنتج إلى سلة التسوق بنجاح",
+    "CART_IS_EMPTY":"يبدو أن سلة تسوقك فارغة",
+    "COUPON_EXPIRED":"انتهت صلاحية الكوبون",
+    "COUPON_ALREADY_APPLIED_NO_MORE_COUPONS":"لقد استخدمت الكوبون من قبل، لا يمكنك استخدام كوبون أخر",
+    "COUPON_ALREADY_USED":"لقد استخدمت هذا الكوبون من قبل",
+    "COUPON_APPLIED": "تم تطبيق الكوبون بنجاح، لديك خصم {discount} جنيه",
+    "CART_ITEMS": {
+        "one": "لديك عنصر واحد في سلتك",
+        "two": "لديك عنصران في سلتك",
+        "few": "لديك {count} عناصر في سلتك",
+        "many": "لديك {count} عنصرًا في سلتك",
+        "other": "لديك {count} عنصر في سلتك"
+    },
+    "PRODUCT_NOT_IN_CART":"لم يتم العثور على المنتج في سلة التسوق",
+    "PRODUCT_REMOVED_FROM_CART":"تمت إزالة المنتج من سلة التسوق بنجاح",
+    "USER_HAS_NO_CART":"لا توجد سلة تسوق لدى المستخدم",
+    "USER_CART_ITEMS": {
+        "one": "لدى المستخدم عنصر واحد في السلة",
+        "two": "لدى المستخدم عنصران في السلة",
+        "few": "لدى المستخدم {count} عناصر في السلة",
+        "many": "لدى المستخدم {count} عنصرًا في السلة",
+        "other": "لدى المستخدم {count} عنصر في السلة"
+    },
+    "USERS_HAVE_NO_CARTS":"لا يوجد لدى المستخدمين أي عربات تسوق",
+    "FOUND_CARTS": {
+        "one": "تم العثور على سلة واحدة",
+        "two": "تم العثور على سلتين",
+        "few": "تم العثور على {count} سلات",
+        "many": "تم العثور على {count} سلةً",
+        "other": "تم العثور على {count} سلة"
+    }
 }

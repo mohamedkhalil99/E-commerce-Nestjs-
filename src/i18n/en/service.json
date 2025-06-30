@@ -9,7 +9,9 @@
     "PRODUCT_REQUEST":"Product Request",
     "COUPON":"Coupon",
     "REVIEW":"Review",
+    "CART":"Cart",
     "ALREADY_EXISTS":"{property} already exists",
+    "INVALID":"Invalid {property}",
     "CREATED_SUCCESSFULLY":"{property} created successfully",
     "INVALID_LIMIT_QUERY_PARAMETERS":"Invalid Limit query parameters",
     "INVALID_SKIP_QUERY_PARAMETERS":"Invalid Skip query parameters",
@@ -22,5 +24,30 @@
     "AFTER_DIS_CANNOT_GREATER_PRICE":"Price After Discount cannot be greater than Price",
     "STOCK_CANNOT_INCREASED":"Stock cannot be increased",
 
-    "COUPON_MUST_BE_IN_FUTURE":"Coupon expire date must be a future date"
+    "COUPON_MUST_BE_IN_FUTURE":"Coupon expire date must be a future date",
+
+    "PRODUCT_OUT_OF_STOCK":"Product out of stock",
+    "STOCK_LOWER_THAN_QUANTITY":"The stock of the Product is lower than your quantity",
+    "PRODUCT_ADDED_TO_CART":"product added to cart successfully",
+    "CART_IS_EMPTY":"Your shopping Cart looks empty",
+    "COUPON_EXPIRED":"Coupon expired",
+    "COUPON_ALREADY_APPLIED_NO_MORE_COUPONS":"You have a coupon already applied, you cannot apply another coupon",
+    "COUPON_ALREADY_USED":"You have already used this coupon",
+    "COUPON_APPLIED": "Coupon applied successfully, you have discount of {discount}LE",
+    "CART_ITEMS": {
+        "one": "You have {count} item in your cart",
+        "other": "You have {count} items in your cart"
+    },
+    "PRODUCT_NOT_IN_CART":"Produuct not found in cart",
+    "PRODUCT_REMOVED_FROM_CART":"Product removed from cart successfully",
+    "USER_HAS_NO_CART":"User has no cart",
+    "USER_CART_ITEMS": {
+        "one": "User has {count} item in cart",
+        "other": "User has {count} items in cart"
+    },
+    "USERS_HAVE_NO_CARTS":"Users have no carts",
+    "FOUND_CARTS": {
+        "one": "Found {count} cart",
+        "other": "Found {count} carts"
+    }
 }

@@ -6,22 +6,23 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Product } from 'src/product/product.schema';
 import { Coupon } from 'src/coupon/coupon.schema';
+import { I18nContext } from 'nestjs-i18n';
 
 @Injectable()
 export class CartService 
 {
   constructor(@InjectModel(Cart.name)private cartModel:Model<Cart>,
-  @InjectModel(Product.name)private productModel:Model<Product>,
+              @InjectModel(Product.name)private productModel:Model<Product>,
               @InjectModel(Coupon.name)private couponModel:Model<Coupon>){}
   
-  async create(createCartDto: CreateCartDto, productId: string,userId:string) :Promise<{status:number,length:number,message:string,data:Cart}>
+  async create(createCartDto: CreateCartDto, productId: string, userId:string, i18n: I18nContext) :Promise<{status:number,length:number,message:string,data:Cart}>
   {
     const product= await this.productModel.findById(productId);
     //check if product exists
-    if(!product){throw new NotFoundException('Product not found');}
+    if(!product){throw new NotFoundException(i18n.t('service.NOT_FOUND', {args:{property:i18n.t('service.PRODUCT')}}));}
     //check if product is in stock
-    if(product.stock<=0){throw new NotFoundException('Product out of stock');}
-    if(product.stock<createCartDto.quantity){throw new NotFoundException('The stock of the Product is lower than your quantity');}
+    if(product.stock<=0){throw new NotFoundException(i18n.t('service.PRODUCT_OUT_OF_STOCK'));}
+    if(product.stock<createCartDto.quantity){throw new NotFoundException(i18n.t('service.STOCK_LOWER_THAN_QUANTITY'));}
     
     //if user has cart, add product to cart
     const ifUserHasCart = await this.cartModel.findOne({user:userId});
@@ -55,7 +56,7 @@ export class CartService
       ifUserHasCart.totalPriceAfterDiscount = ifUserHasCart.totalPrice - totalDiscount;//(cart.totalPrice*coupon.discount/100);
 
       await ifUserHasCart.save();
-      return {status:201,length:ifUserHasCart.cartItems.length,message:'product added to cart successfully',data:ifUserHasCart};
+      return {status:201, length:ifUserHasCart.cartItems.length, message:i18n.t('service.PRODUCT_ADDED_TO_CART'), data:ifUserHasCart};
     }
     //else create cart and add product to cart
     else
@@ -77,27 +78,27 @@ export class CartService
       }
       newCart.totalPriceAfterDiscount = newCart.totalPrice - totalDiscount;//(cart.totalPrice*coupon.discount/100);
       await newCart.save();
-      return{status:201,length:newCart.cartItems.length,message:'product added to cart successfully',data:newCart,  };
+      return{status:201, length:newCart.cartItems.length, message:i18n.t('service.PRODUCT_ADDED_TO_CART'), data:newCart};
     }
   }
 
-  async applyCoupon(couponName: string, userId: string) :Promise<{status:number,message:string,data:Cart}>
+  async applyCoupon(couponName: string, userId: string, i18n: I18nContext) :Promise<{status:number,message:string,data:Cart}>
   {    
     const coupon = await this.couponModel.findOne({name:couponName});    
     //check if coupon exists
-    if(!coupon){throw new NotFoundException('Invalid Coupon');}
+    if(!coupon){throw new NotFoundException(i18n.t('service.INVALID', {args:{property:i18n.t('service.COUPON')}}));}
     const cart = await this.cartModel.findOne({user:userId});    
     //check if cart exists
-    if(!cart){throw new NotFoundException('Your shopping Cart looks empty');}
+    if(!cart){throw new NotFoundException(i18n.t('service.CART_IS_EMPTY'));}
     //check if coupon is valid
-    if(coupon.expireDate< new Date()){throw new ConflictException('Coupon expired');}
+    if(coupon.expireDate< new Date()){throw new ConflictException(i18n.t('service.COUPON_EXPIRED'));}
     //check if coupon already exists in cart
     const ifCouponExists = cart.coupon.find(item=>item.name.toString()===couponName);
-    if(ifCouponExists){throw new ConflictException('Coupon already exists in cart');}
+    if(ifCouponExists){throw new ConflictException(i18n.t('service.ALREADY_EXISTS', {args:{property:i18n.t('service.COUPON')}}));}
     //make sure just one coupon is applied
-    if(cart.coupon.length>0){throw new ConflictException('You have a coupon already applied, you cannot apply another coupon');}
+    if(cart.coupon.length>0){throw new ConflictException(i18n.t('service.COUPON_ALREADY_APPLIED_NO_MORE_COUPONS'));}
     //if user used this coupon before, he cannot use it again
-    if(coupon.usedBy.includes(new Types.ObjectId(userId))){throw new ConflictException('You have already used this coupon');}
+    if(coupon.usedBy.includes(new Types.ObjectId(userId))){throw new ConflictException(i18n.t('service.COUPON_ALREADY_USED'));}
     //add user to coupon users
     coupon.usedBy.push(new Types.ObjectId(userId));
     await coupon.save();
@@ -116,24 +117,24 @@ export class CartService
     else{cart.totalPriceAfterDiscount = cart.totalPrice - totalDiscount;}//(cart.totalPrice*coupon.discount/100);
     
     await cart.save();
-    return {status:200,message:`coupon applied successfully, you have discount of ${coupon.discount}LE`,data:cart};
+    return {status:200, message:i18n.t('service.COUPON_APPLIED', {args:{ discount: coupon.discount }}), data:cart};
   }
   
-  async findOne(userId:string) :Promise<{status:number,message:string,data:Cart}>
+  async findOne(userId:string, i18n: I18nContext) :Promise<{status:number,message:string,data:Cart}>
   {
     const cart=await this.cartModel.findOne({user:userId}).populate('cartItems.productId','price title coverImage stock description _id priceAfterDiscount');
-    if(!cart){throw new NotFoundException('Your shopping Cart looks empty');}
-    return{status:200,message:`You have ${cart.cartItems.length} item in your cart`,data:cart};
+    if(!cart){throw new NotFoundException(i18n.t('service.CART_IS_EMPTY'));}
+    return{status:200, message:i18n.t('service.CART_ITEMS', {args: { count: cart.cartItems.length }}), data:cart};
   }
 
-  async update(updateCartDto: UpdateCartDto,productId: string, userId:string) :Promise<{status:number,length:number,message:string,data:Cart}>
+  async update(updateCartDto: UpdateCartDto, productId: string, userId:string, i18n: I18nContext) :Promise<{status:number,length:number,message:string,data:Cart}>
   {
     const product = await this.productModel.findById(productId);
     //check if product exists
-    if(!product){throw new NotFoundException('Product not found');}
+    if(!product){throw new NotFoundException(i18n.t('service.NOT_FOUND', {args:{property:i18n.t('service.PRODUCT')}}));}
     //check if product is in stock
-    if(product.stock<=0){throw new NotFoundException('Product out of stock');}
-    if(product.stock<updateCartDto.quantity){throw new NotFoundException('The stock of the Product is lower than your quantity');}
+    if(product.stock<=0){throw new NotFoundException(i18n.t('service.PRODUCT_OUT_OF_STOCK'));}
+    if(product.stock<updateCartDto.quantity){throw new NotFoundException(i18n.t('service.STOCK_LOWER_THAN_QUANTITY'));}
     
     const cart=await this.cartModel.findOne({user:userId}).populate('cartItems.productId','price title coverImage stock description _id priceAfterDiscount');
     //check if cart did not exist
@@ -160,12 +161,12 @@ export class CartService
       else{newCart.totalPriceAfterDiscount = newCart.totalPrice - totalDiscount;}//(cart.totalPrice*coupon.discount/100);
 
       await newCart.save();
-      return{status:200,length:newCart.cartItems.length,message:'product added to cart successfully',data:newCart};
+      return{status:200, length:newCart.cartItems.length, message:i18n.t('service.PRODUCT_ADDED_TO_CART'), data:newCart};
     }
 
     //check if product exists in cart
     const productIndex=cart.cartItems.findIndex(item=>item.productId.id.toString()===productId);
-    if(productIndex===-1){throw new NotFoundException('Produuct not found in cart');}
+    if(productIndex===-1){throw new NotFoundException(i18n.t('service.PRODUCT_NOT_IN_CART'));}
     //update color
     if(updateCartDto.color){cart.cartItems[productIndex].color=updateCartDto.color;}
     //update product quantity
@@ -195,21 +196,21 @@ export class CartService
     } 
 
     await cart.save();
-    return {status:200,length:cart.cartItems.length,message:'cart updated successfully',data:cart};
+    return {status:200, length:cart.cartItems.length, message:i18n.t('service.UPDATED_SUCCESSFULLY', {args:{property:i18n.t('service.CART')}}), data:cart};
   }
   
-  async remove(productId: string,userId:string) :Promise<{status:number,length:number,message:string,data:Cart}>
+  async remove(productId: string, userId:string, i18n: I18nContext) :Promise<{status:number,length:number,message:string,data:Cart}>
   {
     const product = await this.productModel.findById(productId);
     //check if product exists
-    if(!product){throw new NotFoundException('Product not found');}
+    if(!product){throw new NotFoundException(i18n.t('service.NOT_FOUND', {args:{property:i18n.t('service.PRODUCT')}}));}
     
     const cart=await this.cartModel.findOne({user:userId}).populate('cartItems.productId','price title coverImage stock description _id priceAfterDiscount');
     //check if cart did not exist
-    if(!cart){throw new NotFoundException('Your shopping Cart looks empty');}
+    if(!cart){throw new NotFoundException(i18n.t('service.CART_IS_EMPTY'));}
     //check if product exists in cart
     const productIndex=cart.cartItems.findIndex(item=>item.productId.id.toString()===productId);
-    if(productIndex===-1){throw new NotFoundException('Produuct not found in cart');}
+    if(productIndex===-1){throw new NotFoundException(i18n.t('service.PRODUCT_NOT_IN_CART'));}
     //remove product from cart
     cart.cartItems.splice(productIndex,1);
     //calculate total price
@@ -233,22 +234,22 @@ export class CartService
     if(cart.totalPriceAfterDiscount<0){cart.totalPriceAfterDiscount=0;}
     
     await cart.save();
-    return {status:200,length:cart.cartItems.length,message:'product removed from cart successfully',data:cart};
+    return {status:200, length:cart.cartItems.length, message:i18n.t('service.', {args:{property:i18n.t('service.PRODUCT_REMOVED_FROM_CART')}}), data:cart};
   }
 
   //***For Admin***\\
   
-  async findOneByAdmin(userId: string) :Promise<{status:number,message:string,data:Cart}>
+  async findOneByAdmin(userId: string, i18n: I18nContext) :Promise<{status:number,message:string,data:Cart}>
   {
     const cart = await this.cartModel.findOne({user:userId}).populate('cartItems.productId','price title coverImage stock description _id priceAfterDiscount');
-    if(!cart){throw new NotFoundException('User has no cart');}
-    return {status:200,message:`User has ${cart.cartItems.length} item in cart`,data:cart};
+    if(!cart){throw new NotFoundException(i18n.t('service.USER_HAS_NO_CART'));}
+    return {status:200, message:i18n.t('service.USER_CART_ITEMS', {args:{ count: cart.cartItems.length }}), data:cart};//`User has ${cart.cartItems.length} item in cart`
   }
 
-  async findAllByAdmin() :Promise<{status:number,message:string,data:Cart[]}>
+  async findAllByAdmin(i18n: I18nContext) :Promise<{status:number,message:string,data:Cart[]}>
   {
     const carts = await this.cartModel.find().populate('cartItems.productId','price title coverImage stock description _id priceAfterDiscount');
-    if(!carts){throw new NotFoundException('Users have no carts');}
-    return {status:200,message:`Found ${carts.length} carts`,data:carts};
+    if(!carts){throw new NotFoundException(i18n.t('service.USERS_HAVE_NO_CARTS'));}
+    return {status:200, message:i18n.t('service.FOUND_CARTS', {args: { count: carts.length }}), data:carts};//`Found ${carts.length} carts`
   }
 }
