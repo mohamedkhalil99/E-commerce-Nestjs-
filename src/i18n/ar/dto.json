@@ -26,7 +26,7 @@
     "PHONE_NUMBER_MUST_BE_11":"رقم الهاتف يجب أن لا يقل عن 11 رقم",
     "ADDRESS_IS_REQUIRED":"العنوان مطلوب",
     "ADDRESS_MUST_BE_A_STRING":"العنوان يجب أن يكون نص",
-    "ACTIVE_MUST_BE_A_BOOLEAN":"النشاط يجب أن يكون شكل منطقي",
+    "ACTIVE_MUST_BE_A_BOOLEAN":"النشاط يجب أن يكون قيمة منطقية",
     "ACTIVE_TRUE_OR_FALSE":"النشاط يجب أن يكون صحيح أم خطأ",
     "VERIFICATION_MUST_BE_A_STRING":"الرقم التأكيدي يجب أن يكون نص",
     "VERIFICATION_MUST_BE_6":"الرقم التأكيدي يجب أن يتكون من 6 أرقام",
@@ -106,5 +106,8 @@
     "PRODUCT_MUST_BE_A_STRING":"يجب أن يكون المنتج نص",
     "PRODUCT_MUST_BE_A_MONGO_ID":"المنتج يجب أن يكون رقم مونجو التعريفي",
     
-    "COLOR_MUST_BE_A_STRING":"اللون يجب أن يكون نص"
+    "COLOR_MUST_BE_A_STRING":"اللون يجب أن يكون نص",
+
+    "ISDELIVERD_IS_REQUIRED":"التسليم مطلوب",
+    "ISDELIVERD_MUST_BE_A_BOOLEAN":"يجب أن يكون التسليم قيمة منطقية"
 }

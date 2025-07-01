@@ -105,5 +105,8 @@
     "PRODUCT_MUST_BE_A_STRING":"Product Must be a string",
     "PRODUCT_MUST_BE_A_MONGO_ID":"Product must be a valid mongo id",
     
-    "COLOR_MUST_BE_A_STRING":"Color must be a string"
+    "COLOR_MUST_BE_A_STRING":"Color must be a string",
+
+    "ISDELIVERD_IS_REQUIRED":"isDeliverd is required",
+    "ISDELIVERD_MUST_BE_A_BOOLEAN":"isDeliverd must be a boolean"
 }

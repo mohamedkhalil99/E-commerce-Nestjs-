@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { CategoryModule } from './category/category.module';
@@ -34,35 +34,41 @@ import { join } from 'path';
         new HeaderResolver(['x-lang']),
       ],
     }),
-  ConfigModule.forRoot(),
-  MongooseModule.forRoot('mongodb://0.0.0.0:27017/ecommerce'),
-  UserModule,
-  JwtModule.register({
-    global: true,
-    secret: process.env.JWTKey,
-    signOptions: { expiresIn: '300s' },
-  }),
-  AuthModule,
-  MailerModule.forRoot({
-    transport: {
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
-      },},
-  }),
-  CategoryModule,
-  SubCategoryModule,
-  BrandModule,
-  CouponModule,
-  SupplierModule,
-  ProductRequestModule,
-  TaxModule,
-  ProductModule,
-  ReviewModule,
-  CartModule,
-  OrderModule,
-  CloudinaryModule,
+    ConfigModule.forRoot({isGlobal: true,}),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        uri: config.get<string>('MONGO_URI'),
+      }),
+    }),
+    UserModule,
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWTKey,
+      signOptions: { expiresIn: '300s' },
+    }),
+    AuthModule,
+    MailerModule.forRoot({
+      transport: {
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USERNAME,
+          pass: process.env.EMAIL_PASSWORD,
+        },},
+    }),
+    CategoryModule,
+    SubCategoryModule,
+    BrandModule,
+    CouponModule,
+    SupplierModule,
+    ProductRequestModule,
+    TaxModule,
+    ProductModule,
+    ReviewModule,
+    CartModule,
+    OrderModule,
+    CloudinaryModule,
 ],
   controllers: [],
   providers: [],

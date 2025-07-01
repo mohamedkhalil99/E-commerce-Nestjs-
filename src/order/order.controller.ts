@@ -1,30 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, UseGuards, ValidationPipe, Req, RawBodyRequest, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, UseGuards, ValidationPipe, Req, RawBodyRequest, Headers, UseFilters } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateDeliveryDto } from './dto/update-order.dto';
 import { AuthGuard } from 'src/user/guards/auth.guard';
 import { Roles } from 'src/user/decorators/roles.decorator';
 import { Request } from 'express';
-
-@Controller('webhook')
-export class WebhookController 
-{
-  constructor(private readonly orderService: OrderService) {}
-
-  //Desc: webhook to handle stripe events
-  //Route: POST api/v1/webhook 
-  //Access: Private (stripe only)
-  @Post()
-  paidConfirmation(@Headers('stripe-signature') sig, @Req() req: RawBodyRequest<Request>)
-  {
-    const endpointSecret = process.env.WEBHOOK_SECRET;
-    const payload = req.rawBody;    
-    return this.orderService.paidConfirmation(payload,sig,endpointSecret);
-    //stripe login
-    //stripe listen --forward-to localhost:3000/api/v1/webhook
-    //4242 4242 4242 4242
-  }
-}
+import { I18n, I18nContext, I18nValidationExceptionFilter } from 'nestjs-i18n';
 
 @Controller('checkout')
 @UseGuards(AuthGuard)//Use the AuthGuard to protect the routes
@@ -37,10 +18,11 @@ export class CheckoutController
   //Access: Private (user only)
   @Roles(['user'])
   @Post(':paymentMethod')
-  create(@Param('paymentMethod') paymentMethod: 'cash'|'card', @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createOrderDto: CreateOrderDto,@Req() req) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  create(@Param('paymentMethod') paymentMethod: 'cash'|'card', @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) createOrderDto: CreateOrderDto, @Req() req, @I18n() i18n: I18nContext) 
   {
     const userId = req.user.id;
-    return this.orderService.create(createOrderDto,paymentMethod,userId);
+    return this.orderService.create(createOrderDto, paymentMethod, userId, i18n);
   }
 }
 
@@ -55,9 +37,10 @@ export class OrderController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Patch('admin/deliveryConfirmation/:orderId')
-  updateDelivery(@Param('orderId') orderId: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateDeliveryDto: UpdateDeliveryDto) 
+  @UseFilters(new I18nValidationExceptionFilter())
+  updateDelivery(@Param('orderId') orderId: string, @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) updateDeliveryDto: UpdateDeliveryDto, @I18n() i18n: I18nContext) 
   {
-    return this.orderService.updateDelivery(orderId, updateDeliveryDto);
+    return this.orderService.updateDelivery(orderId, updateDeliveryDto, i18n);
   }
 
   //Desc: admin can Get all orders
@@ -65,9 +48,9 @@ export class OrderController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Get('admin')
-  findAllOrdersByAdmin()
+  findAllOrdersByAdmin(@I18n() i18n: I18nContext)
   {
-    return this.orderService.findAllOrdersByAdmin();
+    return this.orderService.findAllOrdersByAdmin(i18n);
   }
 
   //Desc: admin can Get all orders
@@ -75,9 +58,9 @@ export class OrderController
   //Access: Private (admin only)
   @Roles(['admin'])
   @Get('admin/:userId')
-  findAllUserOrdersByAdmin(@Param('userId') userId: string)
+  findAllUserOrdersByAdmin(@Param('userId') userId: string, @I18n() i18n: I18nContext)
   {
-    return this.orderService.findAllUserOrdersByAdmin(userId);
+    return this.orderService.findAllUserOrdersByAdmin(userId, i18n);
   }
 
   //Desc: user can Get all his orders
@@ -85,9 +68,29 @@ export class OrderController
   //Access: Private (user only)
   @Roles(['user'])
   @Get('user')
-  findAllOrdersByUser(@Req() req)
+  findAllOrdersByUser(@Req() req, @I18n() i18n: I18nContext)
   {
     const userId = req.user.id;
-    return this.orderService.findAllOrdersByUser(userId);
+    return this.orderService.findAllOrdersByUser(userId, i18n);
+  }
+}
+
+@Controller('webhook')
+export class WebhookController 
+{
+  constructor(private readonly orderService: OrderService) {}
+
+  //Desc: webhook to handle stripe events
+  //Route: POST api/v1/webhook 
+  //Access: Private (stripe only)
+  @Post()
+  paidConfirmation(@Headers('stripe-signature') sig, @Req() req: RawBodyRequest<Request>, @I18n() i18n: I18nContext)
+  {
+    const endpointSecret = process.env.WEBHOOK_SECRET;
+    const payload = req.rawBody;    
+    return this.orderService.paidConfirmation(payload, sig, endpointSecret, i18n);
+    //stripe login
+    //stripe listen --forward-to localhost:3000/api/v1/webhook
+    //4242 4242 4242 4242
   }
 }

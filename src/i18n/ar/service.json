@@ -10,6 +10,7 @@
     "COUPON":"كوبون",
     "REVIEW":"التقييم",
     "CART":"سلة التسوق",
+    "ORDER":"الطلب",
     "ALREADY_EXISTS":"{property} موجود بالفعل",
     "INVALID":"غير صالح {property}",
     "CREATED_SUCCESSFULLY":"{property} تم الأنشاء بنجاح",
@@ -58,5 +59,13 @@
         "few": "تم العثور على {count} سلات",
         "many": "تم العثور على {count} سلةً",
         "other": "تم العثور على {count} سلة"
-    }
+    },
+
+    "CASH_OR_CARD":"يجب عليك اختيار الدفع نقدًا أو بالبطاقة",
+    "ADD_ADDRESS":"يجب عليك إضافة عنوان الشحن",
+    "ORDER_ALREADY_DELIVERED":"تم تسليم الطلب بالفعل",
+    "CONFIRM_DELIVERY":"يجب تأكيد التسليم",
+    "ORDER_DELIVERED_SUCCESS":"تم تسليم الطلب بنجاح",
+    "NO_ORDERS_FOUND":"لم يتم العثور على أي طلبات",
+    "FAILED_ORDER":"فشل إنشاء الطلب"
 }

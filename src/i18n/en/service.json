@@ -10,6 +10,7 @@
     "COUPON":"Coupon",
     "REVIEW":"Review",
     "CART":"Cart",
+    "ORDER":"Order",
     "ALREADY_EXISTS":"{property} already exists",
     "INVALID":"Invalid {property}",
     "CREATED_SUCCESSFULLY":"{property} created successfully",
@@ -49,5 +50,13 @@
     "FOUND_CARTS": {
         "one": "Found {count} cart",
         "other": "Found {count} carts"
-    }
+    },
+
+    "CASH_OR_CARD":"You must choose whether to pay by cash or card",
+    "ADD_ADDRESS":"You must add a shipping address",
+    "ORDER_ALREADY_DELIVERED":"Order already Delivered",
+    "CONFIRM_DELIVERY":"You must confirm delivery",
+    "ORDER_DELIVERED_SUCCESS":"Order Delivered successfully",
+    "NO_ORDERS_FOUND":"No Orders found",
+    "FAILED_ORDER":"Failed to create order"
 }
