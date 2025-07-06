@@ -19,9 +19,18 @@ import { OrderModule } from './order/order.module';
 import { CloudinaryModule } from './upload-images/cloudinary.module';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { join } from 'path';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
+    }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
       loaderOptions: {
