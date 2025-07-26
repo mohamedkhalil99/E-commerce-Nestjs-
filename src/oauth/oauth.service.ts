@@ -61,12 +61,17 @@ export class OauthService {
     return {status: 202, message: i18n.t('dto.PHONE_NUMBER_IS_REQUIRED') , tempUser: tempNewUser, requirePhoneNumber: true};
   }
 
+  // create access token by payload
   const payload={email: user.email, role: user.role, id: user._id};
-  const token= await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET,});
-  return {data: user, token};
+  const accessToken= await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET,});
+
+  //create refresh token
+  const refreshToken = await this.jwtService.signAsync({...payload, countEX:5}, {secret: process.env.JWT_REFRESH_KEY, expiresIn: '7d'});
+  
+  return {data: user, accessToken, refreshToken};
 }
 
-  async completeProfile(completeProfileDto: CompleteProfileDto, i18n: I18nContext): Promise<any> {
+  async completeProfile(completeProfileDto: CompleteProfileDto, i18n: I18nContext): Promise<{status: number, message: string, data: User, accessToken: string, refreshToken: string}> {
     const { tempUser, phoneNumber } = completeProfileDto;
 
     const exists = await this.userModel.findOne({ email: tempUser.email });
@@ -80,10 +85,13 @@ export class OauthService {
     const user = new this.userModel({ ...tempUser, phoneNumber });
     await user.save();
 
+    // create access token by payload
     const payload = { email: user.email, role: user.role, id: user._id };
-    const token = await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET});
+    const accessToken = await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET});
 
-    return {status: 201, message: i18n.t('service.CREATED_SUCCESSFULLY', {args:{property:i18n.t('service.USER')}}), data: user, token};
+    //create refresh token
+    const refreshToken = await this.jwtService.signAsync({...payload, countEX:5}, {secret: process.env.JWT_REFRESH_KEY, expiresIn: '7d'});
+ 
+    return {status: 201, message: i18n.t('service.CREATED_SUCCESSFULLY', {args:{property:i18n.t('service.USER')}}), data: user, accessToken, refreshToken};
   }
-
 }

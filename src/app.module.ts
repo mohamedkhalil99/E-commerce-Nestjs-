@@ -56,7 +56,7 @@ import { OauthModule } from './oauth/oauth.module';
     JwtModule.register({
       global: true,
       secret: process.env.JWTKey,
-      signOptions: { expiresIn: '300s' },
+      signOptions: { expiresIn: '2d' },
     }),
     AuthModule,
     MailerModule.forRoot({

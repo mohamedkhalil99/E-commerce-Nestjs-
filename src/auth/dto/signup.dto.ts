@@ -93,3 +93,9 @@ export class NewPasswordDto
     @MaxLength(20, {message: 'New Password must be at most 20 characters'})
     newPassword: string;
 }
+
+export class RefreshTokenDto {
+  @IsString()
+  @IsNotEmpty()
+  refreshToken: string;
+}

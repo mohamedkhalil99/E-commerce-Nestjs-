@@ -1,6 +1,6 @@
 import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignUpDto, SignInDto, VerifyResetPasswordCodeDto, ForgotPasswordDto, NewPasswordDto } from './dto/signup.dto';
+import { SignUpDto, SignInDto, VerifyResetPasswordCodeDto, ForgotPasswordDto, NewPasswordDto, RefreshTokenDto } from './dto/signup.dto';
 
 @Controller('auth')
 export class AuthController 
@@ -47,9 +47,17 @@ export class AuthController
   //Desc: User can Put a new password
   //Route: PUT api/v1/auth/reset-password
   //Access: Private (Admin, User)
-  @Post('reset-password')//email:SignUpDto
+  @Post('reset-password')
   newPassword(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true}))dto:NewPasswordDto )
   {
     return this.authService.newPassword(dto);
+  }
+
+  //Desc: User can refresh access token
+  //Route: POST api/v1/auth/refresh-token/:refreshToken
+  //Access: Public
+  @Post('refresh-token')
+  refreshToken(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) dto: RefreshTokenDto) {
+    return this.authService.refreshToken(dto.refreshToken);
   }
 }
