@@ -58,5 +58,7 @@
     "CONFIRM_DELIVERY":"You must confirm delivery",
     "ORDER_DELIVERED_SUCCESS":"Order Delivered successfully",
     "NO_ORDERS_FOUND":"No Orders found",
-    "FAILED_ORDER":"Failed to create order"
+    "FAILED_ORDER":"Failed to create order",
+
+    "MISSING_REQUIRED_FIELDS":"Missing required fields: email or phoneNumber"
 }

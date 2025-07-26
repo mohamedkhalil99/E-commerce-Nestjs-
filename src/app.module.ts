@@ -20,6 +20,7 @@ import { CloudinaryModule } from './upload-images/cloudinary.module';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { join } from 'path';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { OauthModule } from './oauth/oauth.module';
 
 @Module({
   imports: [
@@ -78,6 +79,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
     CartModule,
     OrderModule,
     CloudinaryModule,
+    OauthModule,
 ],
   controllers: [],
   providers: [],

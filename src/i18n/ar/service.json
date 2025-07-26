@@ -67,5 +67,8 @@
     "CONFIRM_DELIVERY":"يجب تأكيد التسليم",
     "ORDER_DELIVERED_SUCCESS":"تم تسليم الطلب بنجاح",
     "NO_ORDERS_FOUND":"لم يتم العثور على أي طلبات",
-    "FAILED_ORDER":"فشل إنشاء الطلب"
+    "FAILED_ORDER":"فشل إنشاء الطلب",
+
+    "MISSING_REQUIRED_FIELDS":"الحقول المطلوبة المفقودة: البريد الإلكتروني أو رقم الهاتف"
+
 }

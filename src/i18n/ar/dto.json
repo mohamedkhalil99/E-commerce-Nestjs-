@@ -109,5 +109,9 @@
     "COLOR_MUST_BE_A_STRING":"اللون يجب أن يكون نص",
 
     "ISDELIVERD_IS_REQUIRED":"التسليم مطلوب",
-    "ISDELIVERD_MUST_BE_A_BOOLEAN":"يجب أن يكون التسليم قيمة منطقية"
+    "ISDELIVERD_MUST_BE_A_BOOLEAN":"يجب أن يكون التسليم قيمة منطقية",
+
+    "_id_IS_REQUIRED":"رقم المعرف مطلوب",
+    "_id_MUST_BE_A_STRING":"رقم المعرف يجب أن يكون نص",
+    "_id_MUST_BE_A_MONGO_ID":"رقم المعرف يجب أن يكون رقم مونجو التعريفي"
 }

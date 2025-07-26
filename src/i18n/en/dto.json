@@ -108,5 +108,9 @@
     "COLOR_MUST_BE_A_STRING":"Color must be a string",
 
     "ISDELIVERD_IS_REQUIRED":"isDeliverd is required",
-    "ISDELIVERD_MUST_BE_A_BOOLEAN":"isDeliverd must be a boolean"
+    "ISDELIVERD_MUST_BE_A_BOOLEAN":"isDeliverd must be a boolean",
+
+    "_id_IS_REQUIRED":"_id is required",
+    "_id_MUST_BE_A_STRING":"_id must be a string",
+    "_id_MUST_BE_A_MONGO_ID":"_id must be a valid mongo id"
 }
