@@ -11,15 +11,18 @@
     "REVIEW":"التقييم",
     "CART":"سلة التسوق",
     "ORDER":"الطلب",
+    "EMAIL":"البريد الإلكتروني",
+    "CODE":"الكود",
+    "PASSWORD":"كلمة المرور",
     "ALREADY_EXISTS":"{property} موجود بالفعل",
     "INVALID":"غير صالح {property}",
-    "CREATED_SUCCESSFULLY":"{property} تم الأنشاء بنجاح",
+    "CREATED_SUCCESSFULLY":"تم الأنشاء بنجاح {property}",
     "INVALID_LIMIT_QUERY_PARAMETERS":"عدد النتائج المطلوب غير صحيح",
     "INVALID_SKIP_QUERY_PARAMETERS":"عدد العناصر التي سيتم تجاهلها غير صحيح",
     "INVALID_SORT_QUERY_PARAMETERS":"طريقة الترتيب غير صحيحة",
-    "NOT_FOUND":"{property} غير موجود",
-    "UPDATED_SUCCESSFULLY":"{property} تم تحديث",
-    "DELETED_SUCCESSFULLY":"{property} تم حذف",
+    "NOT_FOUND":"غير موجود {property}",
+    "UPDATED_SUCCESSFULLY":"تم تحديث {property}",
+    "DELETED_SUCCESSFULLY":"تم حذف {property}",
     "ALREADY_UNACTIVATED":"غير مفعل بالفعل {property}",
     "UNACTIVATED_SUCCESSFULLY":"{property} تم تفعيل",
     "AFTER_DIS_CANNOT_GREATER_PRICE":"السعر بعد الخصم لا يمكن أن يتخطي السعر",
@@ -69,6 +72,12 @@
     "NO_ORDERS_FOUND":"لم يتم العثور على أي طلبات",
     "FAILED_ORDER":"فشل إنشاء الطلب",
 
-    "MISSING_REQUIRED_FIELDS":"الحقول المطلوبة المفقودة: البريد الإلكتروني أو رقم الهاتف"
+    "MISSING_REQUIRED_FIELDS":"الحقول المطلوبة المفقودة: البريد الإلكتروني أو رقم الهاتف",
 
+    "WRONG_EMAIL_OR_PASS":"البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "verification_code_sent": "{email} تم إرسال رمز التحقق إلى بريدك الإلكتروني",
+    "CODE_VERIFIED":"تم التحقق من الكود بنجاح",
+    "REFRESH_TOKEN_EXP_OR_INVALID":"رمز التحديث منتهي الصلاحية أو غير صالح",
+    "INVALID_REFRESH_TOKEN":"رمز التحديث غير صالح، يرجى تسجيل الدخول مرة أخرى",
+    "TOKEN_REFRESHED_SUCCESS":"تم تحديث الرمز بنجاح"
 }

@@ -11,6 +11,9 @@
     "REVIEW":"Review",
     "CART":"Cart",
     "ORDER":"Order",
+    "EMAIL":"Email",
+    "CODE":"Code",
+    "PASSWORD":"Password",
     "ALREADY_EXISTS":"{property} already exists",
     "INVALID":"Invalid {property}",
     "CREATED_SUCCESSFULLY":"{property} created successfully",
@@ -60,5 +63,12 @@
     "NO_ORDERS_FOUND":"No Orders found",
     "FAILED_ORDER":"Failed to create order",
 
-    "MISSING_REQUIRED_FIELDS":"Missing required fields: email or phoneNumber"
+    "MISSING_REQUIRED_FIELDS":"Missing required fields: email or phoneNumber",
+
+    "WRONG_EMAIL_OR_PASS":"Wrong Email Or Password",
+    "verification_code_sent": "Verification code sent to your email {email}",
+    "CODE_VERIFIED":"Code verified successfully",
+    "REFRESH_TOKEN_EXP_OR_INVALID":"Refresh token expired or invalid",
+    "INVALID_REFRESH_TOKEN":"Invalid refresh token, Sign In Again!",
+    "TOKEN_REFRESHED_SUCCESS":"Token refreshed successfully"
 }

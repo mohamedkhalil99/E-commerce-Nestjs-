@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
-import { IsArray, IsEmail, IsNotEmpty, IsString, MaxLength, MinLength, ValidateNested } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, IsPhoneNumber, IsString, Length, MaxLength, MinLength, ValidateNested } from "class-validator";
+import { i18nValidationMessage } from "nestjs-i18n";
 
 class AddressDto 
 {
@@ -18,28 +19,30 @@ class AddressDto
 
 export class SignUpDto 
 {
-    @IsNotEmpty({message: 'Name is required'})
-    @IsString({message: 'Name must be a string'})
-    @MinLength(3, {message: 'Name must be at least 3 characters'})
-    @MaxLength(30, {message: 'Name must be at most 30 characters'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.NAME_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.NAME_MUST_BE_A_STRING')})
+    @MinLength(3, {message: i18nValidationMessage('dto.NAME_AT_LEAST_3')})
+    @MaxLength(30, {message: i18nValidationMessage('dto.NAME_AT_MOST_30')})
     name: string;
 
-    @IsNotEmpty({message: 'Email is required'})
-    @IsString({message: 'Email must be a string'})
-    @IsEmail({}, {message: 'Invalid email format'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.EMAIL_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.EMAIL_MUST_BE_A_STRING')})
+    @IsEmail({}, {message: i18nValidationMessage('dto.INVALID_EMAIL_FORMAT')})
     email: string;
 
-    @IsNotEmpty({message: 'Password is required'})
-    @IsString({message: 'Password must be a string'})
-    @MinLength(6, {message: 'Password must be at least 6 characters'})
-    @MaxLength(20, {message: 'Password must be at most 20 characters'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.PASS_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.PASS_MUST_BE_A_STRING')})
+    @MinLength(6, {message: i18nValidationMessage('dto.PASS_AT_LEAST_6')})
+    @MaxLength(20, {message: i18nValidationMessage('dto.PASS_AT_MOST_20')})
     password: string;
 
-    @IsNotEmpty({message: 'Phone Number is required'})
-    @IsString({message:'Phone Number must be a string'})
-    phoneNumber:string;
+    @IsNotEmpty({message: i18nValidationMessage('dto.PHONE_NUMBER_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.PHONE_NUMBER_MUST_BE_A_STRING')})
+    @IsPhoneNumber('EG',{message: i18nValidationMessage('dto.PHONE_NUMBER_MUST_EG')})
+    @Length(11, 11, {message: i18nValidationMessage('dto.PHONE_NUMBER_MUST_BE_11')})
+    phoneNumber: string;
 
-    @IsNotEmpty({message: 'Address is required'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.ADDRESS_IS_REQUIRED')})
     @ValidateNested()
     @IsArray()
     @Type(() => AddressDto)
@@ -48,49 +51,50 @@ export class SignUpDto
 
 export class SignInDto 
 {
-    @IsNotEmpty({message: 'Email is required'})
-    @IsString({message: 'Email must be a string'})
-    @IsEmail({}, {message: 'Invalid email format'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.EMAIL_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.EMAIL_MUST_BE_A_STRING')})
+    @IsEmail({}, {message: i18nValidationMessage('dto.INVALID_EMAIL_FORMAT')})
     email: string;
 
-    @IsNotEmpty({message: 'Password is required'})
-    @IsString({message: 'Password must be a string'})
-    @MinLength(6, {message: 'Password must be at least 6 characters'})
-    @MaxLength(20, {message: 'Password must be at most 20 characters'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.PASS_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.PASS_MUST_BE_A_STRING')})
+    @MinLength(6, {message: i18nValidationMessage('dto.PASS_AT_LEAST_6')})
+    @MaxLength(20, {message: i18nValidationMessage('dto.PASS_AT_MOST_20')})
     password: string;
 }
 
 export class ForgotPasswordDto
 {
-    @IsNotEmpty({message: 'Email is required'})
-    @IsString({message: 'Email must be a string'})
-    @IsEmail({}, {message: 'Invalid email format'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.EMAIL_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.EMAIL_MUST_BE_A_STRING')})
+    @IsEmail({}, {message: i18nValidationMessage('dto.INVALID_EMAIL_FORMAT')})
     email: string;
 }
 
 export class VerifyResetPasswordCodeDto
 {
-    @IsNotEmpty({message: 'Email is required'})
-    @IsString({message: 'Email must be a string'})
-    @IsEmail({}, {message: 'Invalid email format'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.EMAIL_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.EMAIL_MUST_BE_A_STRING')})
+    @IsEmail({}, {message: i18nValidationMessage('dto.INVALID_EMAIL_FORMAT')})
     email: string;
 
-    @IsNotEmpty({message: 'Code is required'})
-    @IsString({message: 'Code must be a string'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.CODE_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.CODE_MUST_BE_A_STRING')})
+    @Length(6, 6, {message: i18nValidationMessage('dto.CODE_MUST_BE_6')})
     code: string;
 }
 
 export class NewPasswordDto
 {
-    @IsNotEmpty({message: 'Email is required'})
-    @IsString({message: 'Email must be a string'})
-    @IsEmail({}, {message: 'Invalid email format'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.EMAIL_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.EMAIL_MUST_BE_A_STRING')})
+    @IsEmail({}, {message: i18nValidationMessage('dto.INVALID_EMAIL_FORMAT')})
     email: string;
 
-    @IsNotEmpty({message: 'New Password is required'})
-    @IsString({message: 'New Password must be a string'})
-    @MinLength(6, {message: 'New Password must be at least 6 characters'})
-    @MaxLength(20, {message: 'New Password must be at most 20 characters'})
+    @IsNotEmpty({message: i18nValidationMessage('dto.NEW_PASS_IS_REQUIRED')})
+    @IsString({message: i18nValidationMessage('dto.NEW_PASS_MUST_BE_A_STRING')})
+    @MinLength(6, {message: i18nValidationMessage('dto.NEW_PASS_AT_LEAST_6')})
+    @MaxLength(20, {message: i18nValidationMessage('dto.NEW_PASS_AT_MOST_20')})
     newPassword: string;
 }
 

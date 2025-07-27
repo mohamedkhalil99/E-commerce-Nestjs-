@@ -68,8 +68,8 @@ export class OrderService
       //Send the order confrmation to the email
       const { addressDetails, district, city } = order.shippingAddress[0];
 
-      const htmlmsg = `
-        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+      const htmlmsg = 
+        `<div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
           <h1 style="color: #007bff; text-align: center;">Order Confirmation</h1>
           <p>Dear <strong>${user.name}</strong>,</p>
           <p>Thank you for your order! We have received your order and are currently processing it.</p>
@@ -82,11 +82,9 @@ export class OrderService
             <p><strong>Cash On Delivery Fees:</strong> EGP ${order.cashOnDelivery}</p>
             <p><strong>Total Price:</strong> EGP ${order.orderTotalPrice}</p>
           </div>
-      
           <p style="text-align: center; margin-top: 20px;">We appreciate your trust in us and look forward to serving you again.</p>
           <p style="text-align: center; font-size: 14px; color: #666;">If you have any questions, please contact our support team.</p>
-        </div>
-      `;  
+        </div>`;  
       
       await this.mailService.sendMail
       ({

@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { MailerService } from '@nestjs-modules/mailer';
+import { I18nContext } from 'nestjs-i18n';
 
 //bcrypt salt rounds
 const saltRounds = 10;
@@ -15,11 +16,11 @@ export class AuthService
 {
     constructor(@InjectModel(User.name) private userModel: Model<User>, private jwtService: JwtService, private readonly mailService: MailerService) {}
     
-    async signUp(signUpDto: SignUpDto) : Promise<{status: number, message: string, data: User, accessToken: string, refreshToken: string}>
+    async signUp(signUpDto: SignUpDto, i18n: I18nContext) : Promise<{status: number, message: string, data: User, accessToken: string, refreshToken: string}>
     {
         //if email exists to avoid duplication
         const ifEmailExists = await this.userModel.findOne({email:signUpDto.email});
-        if(ifEmailExists){throw new ConflictException('Email already exists');}
+        if(ifEmailExists){throw new ConflictException(i18n.t('service.ALREADY_EXISTS', {args:{property:i18n.t('service.EMAIL')}}));}
         
         //create user and hash password
         const password = await bcrypt.hash(signUpDto.password, saltRounds);
@@ -36,11 +37,18 @@ export class AuthService
         
         //Send welcome email
         const htmllmsg=
-        `<div>
-        <h1 style="font-weight:bold; text-align:center"> Welcome to E-Commerce-Nestjs </h1>
-        <p style="font-weight:bold; text-align:center"> Your account has been created successfully </p>
-        <h4 style="font-weight:bold;"> E-Commerce-Nestjs </h4>  
-        </div>`;
+        `<div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: auto;">
+            <h1 style="color: #2c3e50; text-align: center; font-size: 28px; margin-bottom: 10px;">
+                Welcome to <span style="color: #007bff;">E-Commerce NestJS</span>
+            </h1>
+            <p style="text-align: center; font-size: 18px; color: #333;">
+                Your account has been created successfully. We're excited to have you onboard!
+            </p>
+            <hr style="margin: 30px 0;">
+            <p style="text-align: center; font-size: 14px; color: #777;">
+                — E-Commerce NestJS Team
+            </p>
+        </div>`
         
         await this.mailService.sendMail
         ({
@@ -50,19 +58,19 @@ export class AuthService
             html: htmllmsg,
         });
         
-        return {status: 201, message: 'User created successfully', data: newUser, accessToken, refreshToken};
+        return {status: 201, message: i18n.t('service.CREATED_SUCCESSFULLY', {args:{property:i18n.t('service.USER')}}), data: newUser, accessToken, refreshToken};
     }
     
-    async signIn(signInDto: SignInDto) : Promise<{data: User, accessToken: string, refreshToken: string}>
+    async signIn(signInDto: SignInDto, i18n: I18nContext) : Promise<{data: User, accessToken: string, refreshToken: string}>
     {
         //find the email
         const ifEmailExists = await this.userModel.findOne({email:signInDto.email}).select('name email role password');
-        if(!ifEmailExists){throw new ConflictException('Wrong Email Or Password');}
+        if(!ifEmailExists){throw new ConflictException(i18n.t('service.WRONG_EMAIL_OR_PASS'));}
         
         //compare password with hashed one
         const hashedPassword = ifEmailExists.password;
         const isMatch = await bcrypt.compare(signInDto.password, hashedPassword);
-        if(!isMatch){throw new ConflictException('Wrong Email Or Password');}
+        if(!isMatch){throw new ConflictException(i18n.t('service.WRONG_EMAIL_OR_PASS'));}
         
         //create access token by payload
         const payload={email: ifEmailExists.email, role: ifEmailExists.role, id: ifEmailExists._id};
@@ -74,11 +82,11 @@ export class AuthService
         return {data: ifEmailExists, accessToken, refreshToken};
     }
     
-    async forgotPassword(email: ForgotPasswordDto) : Promise<{status: number, message: string}>
+    async forgotPassword(email: ForgotPasswordDto, i18n: I18nContext) : Promise<{status: number, message: string}>
     {
         //find the email
         const ifEmailExists = await this.userModel.findOne({email:email.email});
-        if(!ifEmailExists){throw new ConflictException('Email does not exist');}
+        if(!ifEmailExists){throw new ConflictException(i18n.t('service.NOT_FOUND', {args:{property:i18n.t('service.EMAIL')}}));}
         
         //create 6 digit Code
         //const code = math.floor(math.random()*1000000).toString().padStart(6, '0');
@@ -102,42 +110,42 @@ export class AuthService
             subject: 'E-Commerce-Nestjs | Reset Password',
             html: htmllmsg,
         });
-        return {status: 201, message: `Verification code sent to your email ${email.email}`};
+        return {status: 201, message:i18n.t('service.verification_code_sent', {args: { email: email.email }})};//`Verification code sent to your email ${email.email}`
     }
     
-    async verifyResetPasswordCode(dto:VerifyResetPasswordCodeDto): Promise<{status: number, message: string}> 
+    async verifyResetPasswordCode(dto:VerifyResetPasswordCodeDto, i18n: I18nContext): Promise<{status: number, message: string}> 
     {
         //find the code
         const ifCodeExists = await this.userModel.findOne({email: dto.email,verificationCode: dto.code}).select('email verificationCode');
-        if(!ifCodeExists){throw new ConflictException('Invalid code');}
+        if(!ifCodeExists){throw new ConflictException(i18n.t('service.INVALID', {args:{property:i18n.t('service.CODE')}}));}
         await this.userModel.findOneAndUpdate({email:dto.email},{verificationCode:null});
-        return {status: 200 , message: 'Code verified successfully'};
+        return {status: 200 , message: i18n.t('service.CODE_VERIFIED')};
     }
     
-    async newPassword(dto:NewPasswordDto) : Promise<{status: number, message: string}>
+    async newPassword(dto:NewPasswordDto, i18n: I18nContext) : Promise<{status: number, message: string}>
     {
         //find the email
         const ifEmailExists = await this.userModel.findOne({email:dto.email});
-        if(!ifEmailExists){throw new NotFoundException('Email does not exist');}
+        if(!ifEmailExists){throw new NotFoundException(i18n.t('service.NOT_FOUND', {args:{property:i18n.t('service.EMAIL')}}));}
         
         //hash the new password
         const newPassword = await bcrypt.hash(dto.newPassword, saltRounds);
         await this.userModel.findOneAndUpdate({email:dto.email},{password:newPassword});
-        return {status: 200, message: 'Password updated successfully'};
+        return {status: 200, message: i18n.t('service.UPDATED_SUCCESSFULLY', {args:{property:i18n.t('service.PASSWORD')}})};
     }
 
-    async refreshToken(refreshToken: string): Promise<{ status: number; message: string; accessToken: string; refreshToken: string }> {
+    async refreshToken(refreshToken: string, i18n: I18nContext): Promise<{ status: number; message: string; accessToken: string; refreshToken: string }> {
         let payload;
         try {payload = await this.jwtService.verifyAsync(refreshToken, {secret: process.env.JWT_REFRESH_KEY});} 
-        catch {throw new ConflictException('Refresh token expired or invalid');}
+        catch {throw new ConflictException(i18n.t('service.REFRESH_TOKEN_EXP_OR_INVALID'));}
 
-        if (!payload || payload.countEX <= 0) {throw new ConflictException('Invalid refresh token, Sign In Again!');}
+        if (!payload || payload.countEX <= 0) {throw new ConflictException(i18n.t('service.INVALID_REFRESH_TOKEN'));}
 
         // Check if user ID is present in the payload
         let userId = payload.id;
         if (!userId) {
             const user = await this.userModel.findOne({ email: payload.email });
-            if (!user) {throw new ConflictException('User not found');}
+            if (!user) {throw new ConflictException(i18n.t('service.NOT_FOUND', {args:{property:i18n.t('service.USER')}}));}
             userId = user._id.toString();
         }
 
@@ -151,6 +159,6 @@ export class AuthService
             {secret: process.env.JWT_REFRESH_KEY, expiresIn: '7d'}
         );
 
-        return { status: 200, message: 'Token refreshed successfully', accessToken, refreshToken: newRefreshToken };
+        return { status: 200, message: i18n.t('service.TOKEN_REFRESHED_SUCCESS'), accessToken, refreshToken: newRefreshToken};
     }
 }

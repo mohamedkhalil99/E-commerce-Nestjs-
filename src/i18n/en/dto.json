@@ -112,5 +112,13 @@
 
     "_id_IS_REQUIRED":"_id is required",
     "_id_MUST_BE_A_STRING":"_id must be a string",
-    "_id_MUST_BE_A_MONGO_ID":"_id must be a valid mongo id"
+    "_id_MUST_BE_A_MONGO_ID":"_id must be a valid mongo id",
+
+    "CODE_IS_REQUIRED":"Code is required",
+    "CODE_MUST_BE_A_STRING":"Code must be a string",
+    "CODE_MUST_BE_6":"Code must be a 6-digit string",
+    "NEW_PASS_IS_REQUIRED":"New Password is required",
+    "NEW_PASS_MUST_BE_A_STRING":"New Password must be a string",
+    "NEW_PASS_AT_LEAST_6":"New Password must be at least 6 characters",
+    "NEW_PASS_AT_MOST_20":"New Password must be at most 20 characters"
 }
