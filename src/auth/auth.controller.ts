@@ -34,9 +34,9 @@ export class AuthController
   //Access: Public
   @Post('forgot-password')
   @UseFilters(new I18nValidationExceptionFilter())
-  forgotPassword(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) email: ForgotPasswordDto, @I18n() i18n: I18nContext)
+  forgotPassword(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) emailDto: ForgotPasswordDto, @I18n() i18n: I18nContext)
   {
-    return this.authService.forgotPassword(email, i18n);
+    return this.authService.forgotPassword(emailDto, i18n);
   }
 
   //Desc: User can verify the reset password code

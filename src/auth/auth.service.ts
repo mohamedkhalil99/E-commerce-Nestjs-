@@ -82,46 +82,55 @@ export class AuthService
         return {data: ifEmailExists, accessToken, refreshToken};
     }
     
-    async forgotPassword(email: ForgotPasswordDto, i18n: I18nContext) : Promise<{status: number, message: string}>
+    async forgotPassword(emailDto: ForgotPasswordDto, i18n: I18nContext) : Promise<{status: number, message: string}>
     {
         //find the email
-        const ifEmailExists = await this.userModel.findOne({email:email.email});
+        const ifEmailExists = await this.userModel.findOne({email:emailDto.email});
         if(!ifEmailExists){throw new ConflictException(i18n.t('service.NOT_FOUND', {args:{property:i18n.t('service.EMAIL')}}));}
         
         //create 6 digit Code
         //const code = math.floor(math.random()*1000000).toString().padStart(6, '0');
         const code = Math.floor(100000 + Math.random() * 900000);
         
+        //hash the code
+        const hashedCode = await bcrypt.hash(code.toString(), saltRounds);
+
         //Put the code in the Verification Code field in the database
-        await this.userModel.findOneAndUpdate({email:email.email},{verificationCode:code});
+        await this.userModel.findOneAndUpdate({email:emailDto.email},{verificationCode:hashedCode});
         
         //Send the code to the email
         const htmllmsg=
         `<div>
-        <h1 style="font-weight:bold; text-align:center"> Your verification code is </h1>
-        <p><h2 style="color: green; font-weight:bold; text-align:center"> ${code} </h2></p>
-        <h4 style="font-weight:bold;"> E-Commerce-Nestjs </h4>
+            <h1 style="font-weight:bold; text-align:center"> Your verification code is </h1>
+            <p><h2 style="color: green; font-weight:bold; text-align:center"> ${code} </h2></p>
+            <h4 style="font-weight:bold;"> E-Commerce-Nestjs </h4>
         </div>`;
         
         await this.mailService.sendMail
         ({
             from: `E-Commerce-Nestjs <${process.env.EMAIL_USERNAME}>`,
-            to:email.email,
+            to:emailDto.email,
             subject: 'E-Commerce-Nestjs | Reset Password',
             html: htmllmsg,
         });
-        return {status: 201, message:i18n.t('service.verification_code_sent', {args: { email: email.email }})};//`Verification code sent to your email ${email.email}`
+        return {status: 201, message:i18n.t('service.verification_code_sent', {args: { email: emailDto.email }})};//`Verification code sent to your email ${email.email}`
     }
     
-    async verifyResetPasswordCode(dto:VerifyResetPasswordCodeDto, i18n: I18nContext): Promise<{status: number, message: string}> 
-    {
-        //find the code
-        const ifCodeExists = await this.userModel.findOne({email: dto.email,verificationCode: dto.code}).select('email verificationCode');
-        if(!ifCodeExists){throw new ConflictException(i18n.t('service.INVALID', {args:{property:i18n.t('service.CODE')}}));}
-        await this.userModel.findOneAndUpdate({email:dto.email},{verificationCode:null});
-        return {status: 200 , message: i18n.t('service.CODE_VERIFIED')};
+    async verifyResetPasswordCode(dto: VerifyResetPasswordCodeDto, i18n: I18nContext): Promise<{ status: number; message: string }> {
+        //Check if the user exists
+        const user = await this.userModel.findOne({ email: dto.email }).select('email verificationCode');
+        if (!user || !user.verificationCode) {throw new ConflictException(i18n.t('service.INVALID', { args: { property: i18n.t('service.CODE') } }));}
+
+        // Compare the provided code with the hashed code in the database
+        const isMatch = await bcrypt.compare(dto.code, user.verificationCode);
+        if (!isMatch) {throw new ConflictException(i18n.t('service.INVALID', { args: { property: i18n.t('service.CODE') } }));}
+
+        // If the code matches, clear the verificationCode field
+        await this.userModel.findOneAndUpdate({ email: dto.email }, { verificationCode: null });
+
+        return {status: 200, message: i18n.t('service.CODE_VERIFIED'),};
     }
-    
+
     async newPassword(dto:NewPasswordDto, i18n: I18nContext) : Promise<{status: number, message: string}>
     {
         //find the email
