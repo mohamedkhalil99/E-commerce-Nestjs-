@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate
 
     try 
     {
-      const payload = this.jwtService.verify(token, {secret: process.env.JWTKey});
+      const payload = this.jwtService.verify(token, {secret: process.env.JWT_KEY});
 
       request.user = payload;
 
@@ -52,7 +52,7 @@ export class AuthGuard implements CanActivate
         
 //         try 
 //         { 
-//             const payload= await this.jwtService.verifyAsync(token,{secret:process.env.JWT_SECRET,});  
+//             const payload= await this.jwtService.verifyAsync(token,{secret:process.env.JWT_KEY,});  
 //             //
 //             if(payload._id){request.user=payload; return true;}
 //             //           

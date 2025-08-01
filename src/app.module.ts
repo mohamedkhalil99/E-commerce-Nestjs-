@@ -55,7 +55,7 @@ import { OauthModule } from './oauth/oauth.module';
     UserModule,
     JwtModule.register({
       global: true,
-      secret: process.env.JWTKey,
+      secret: process.env.JWT_KEY,
       signOptions: { expiresIn: '2d' },
     }),
     AuthModule,

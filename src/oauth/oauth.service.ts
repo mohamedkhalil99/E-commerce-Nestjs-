@@ -63,7 +63,7 @@ export class OauthService {
 
   // create access token by payload
   const payload={email: user.email, role: user.role, id: user._id};
-  const accessToken= await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET,});
+  const accessToken= await this.jwtService.signAsync(payload, {secret: process.env.JWT_KEY,});
 
   //create refresh token
   const refreshToken = await this.jwtService.signAsync({...payload, countEX:5}, {secret: process.env.JWT_REFRESH_KEY, expiresIn: '7d'});
@@ -87,7 +87,7 @@ export class OauthService {
 
     // create access token by payload
     const payload = { email: user.email, role: user.role, id: user._id };
-    const accessToken = await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET});
+    const accessToken = await this.jwtService.signAsync(payload, {secret: process.env.JWT_KEY});
 
     //create refresh token
     const refreshToken = await this.jwtService.signAsync({...payload, countEX:5}, {secret: process.env.JWT_REFRESH_KEY, expiresIn: '7d'});

@@ -30,7 +30,7 @@ export class AuthService
 
         //create access token by payload
         const payload= {email:newUser.email, role:newUser.role,};
-        const accessToken= await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET,});
+        const accessToken= await this.jwtService.signAsync(payload, {secret: process.env.JWT_KEY,});
         
         //create refresh token
         const refreshToken = await this.jwtService.signAsync({...payload, countEX:5}, {secret: process.env.JWT_REFRESH_KEY, expiresIn: '7d'});
@@ -74,7 +74,7 @@ export class AuthService
         
         //create access token by payload
         const payload={email: ifEmailExists.email, role: ifEmailExists.role, id: ifEmailExists._id};
-        const accessToken= await this.jwtService.signAsync(payload, {secret: process.env.JWT_SECRET,});
+        const accessToken= await this.jwtService.signAsync(payload, {secret: process.env.JWT_KEY,});
 
         //create refresh token
         const refreshToken = await this.jwtService.signAsync({...payload, countEX:5}, {secret: process.env.JWT_REFRESH_KEY, expiresIn: '7d'});
@@ -160,7 +160,7 @@ export class AuthService
 
         const accessToken = await this.jwtService.signAsync(
             {id: userId, email: payload.email, role: payload.role},
-            {secret: process.env.JWT_SECRET}
+            {secret: process.env.JWT_KEY}
         );
 
         const newRefreshToken = await this.jwtService.signAsync(
